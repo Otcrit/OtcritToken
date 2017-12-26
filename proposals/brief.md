@@ -116,7 +116,7 @@ will transfer to `pre-ico` contract. In the `pre-ico` contract investor identifi
 **Cons**
 
 * More dev resources to implement comparing `Simple` case
-* Single point of failure - if website DB will lost then all investor identifiers will
+* Single point of failure - if website DB will lost all investor identifiers
 * Investor do not control their investments from cryptographically point of view. ()This restriction can be resolved.)
 
 # How to control/admin Token and ICO?
@@ -159,7 +159,7 @@ and many other operations
 
 Website will show pre-ico/ico status and dates in real time 
 
-# Estimation of Develepment resources: 
+# Estimation of Development resources: 
 
 * OTC Token with support of privileged users: 14h 
 * Pre-ICO contract: 26h 
