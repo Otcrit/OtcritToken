@@ -1,0 +1,9 @@
+{
+  "eslint.autoFixOnSave": true,
+  "scss.scannerExclude": [
+    "**/.git",
+    "**/bower_components"
+  ],
+  "favorites.resources": [],
+  "eslint.enable": false
+}

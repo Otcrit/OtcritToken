@@ -1,0 +1,9 @@
+{
+  "name": "otcrit",
+  "version": "1.0.0",
+  "description": "Otcrit Token and Pre-ICO contract ",
+  "main": "index.js",
+  "author": "Anton Adamansky <adamansky@gmail.com>",
+  "license": "private",
+  "private": true
+}
