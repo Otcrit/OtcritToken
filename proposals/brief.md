@@ -13,22 +13,23 @@ Before ICO and Pre-ICO a production ready ERC20 compliant OCR Token must be depl
 ## Token features
 
 * Token has fixed supply and not mintable
-* Total supply: `65e6` tokens
+* Total supply: `100e6` tokens
 * Token id: `OTC`
 * `18` decimals
-* Token/ETH exchange rate: `4000`
+* Token/ETH exchange rate: `5000`
 * Token can be in locked/unlocked states:
 * `Locked` state - tokens cannot be transfered outside from investor.
 * `Unlocked` state - tokens can be transfered from investor. Unlocked state is only allowed
-when main ICO successfully completed and all available tokens (65e6) are distributed.
+when main ICO successfully completed and all available tokens (100e6) are distributed.
 * Token distribution can be managed from selected ETH addresses controlled by `Token Owner`
 
 ## Token distribution table
 
-* `52e6` Sold to public
-* `5.5e6` Team members
-* `3.25e6` Bounty
-* `3.25` Partners and advisors
+* `70e6` Sold to public
+* `10e6` Team members
+* `10e6` Bounty
+* `5e6`  Partners and advisors
+* `5e6`  Reserve for over-the-counter and future development
 
 ## Token distribution among privileged holders
 
@@ -78,12 +79,12 @@ Investors are able to returns theirs funds.
 
 ## Pre-ICO distribution rules
 
-* `6.75e6` Tokens distributed in pre-ico phase
-* `1 ETH == 4000 OTC`
-* `12.5%` Bonus as percent of investment during first week of pre-ico
+* `9e6` Tokens distributed in pre-ico phase
+* `1 ETH == 5000 OTC`
+* `15%` Bonus as percent of investment during first week of pre-ico
 * `10%` Bonus as percent of investment from second week up to end of pre-ico
 * Hard-cap `1500` ETH
-* Low-cap `100` ETH
+* Low-cap `200` ETH
 * Investor can return his initial funds only if `pre-ico` in `Terminated` or `Not completed` states
 
 ## Pre-ICO investment workflow
