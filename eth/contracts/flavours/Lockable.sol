@@ -12,6 +12,13 @@ contract Lockable is Ownable {
 
   bool public locked = false;
 
+  function Lockable(bool locked_)
+    Ownable()
+    public
+  {
+    locked = locked_;
+  }
+
   /**
    * @dev Modifier to make a function callable
   *       only when the contract is not locked.

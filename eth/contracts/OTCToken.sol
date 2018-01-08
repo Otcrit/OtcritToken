@@ -1,26 +1,27 @@
 pragma solidity ^0.4.18;
 
 import './commons/SafeMath.sol';
-import './flavours/Lockable.sol';
+import './ICOToken.sol';
 
 /**
  * @title ERC20 OTC Token https://otcrit.org
  */
-contract OTCToken is Lockable {
+contract OTCToken is ICOToken {
 
-  using SafeMath for uint256;
+  using SafeMath for uint;
 
   /**
    * @dev Constructor
    */
-  function OTCToken(uint256 totalSupplyTokens_,
-                    uint256 reservedTeamTokens_,
-                    uint256 reservedPartnersTokens_,
-                    uint256 reservedBountyTokens_,
-                    uint256 reservedOtherTokens_) Ownable() public {
-    // Tocken is locked initially
-    locked = true;
-    totalSupply = totalSupplyTokens_;
+  function OTCToken(address ico_,
+                    uint totalSupplyTokens_,
+                    uint reservedTeamTokens_,
+                    uint reservedPartnersTokens_,
+                    uint reservedBountyTokens_,
+                    uint reservedOtherTokens_)
+    ICOToken(ico_, totalSupplyTokens_)
+    public
+  {
     require(reservedTeamTokens_
             .add(reservedBountyTokens_)
             .add(reservedPartnersTokens_)
@@ -39,21 +40,32 @@ contract OTCToken is Lockable {
   uint8 public RESERVED_OTHER_SIDE = 0x8;
 
   /// @dev Token reservation mapping: key(RESERVED_X) => value(number of tokens)
-  mapping(uint8 => uint256) public reserved;
+  mapping(uint8 => uint) public reserved;
 
-  function reserve(address to_, uint8 side_, uint256 amount_)
+  function reserve(address to_, uint8 side_, uint amount_)
     onlyOwner
     public
   {
     require(to_ != address(0) && (side_ & 0xf) != 0);
+    availableSupply.sub(amount_);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);
-    ReservedTokensAssigned(to_, side_, amount_);
+    ReservedICOTokensDistributed(to_, side_, amount_);
   }
 
-  /// @dev Reserved tokens
-  event ReservedTokensAssigned(address indexed to, uint8 reservedSide, uint256 amount);
+  function icoDistribute(address to_, uint amount_)
+    checkICODistribute(amount_)
+    public
+  {
+    availableSupply.sub(amount_);
+    balances[to_] = balances[to_].add(amount_);
+    ICOTokensDistributed(to_, amount_);
+  }
+
+  event ICOTokensDistributed(address indexed to, uint amount);
+
+  event ReservedICOTokensDistributed(address indexed to, uint8 reservedSide, uint amount);
 
   //---------------------------- Detailed ERC20 Token
 
@@ -63,25 +75,23 @@ contract OTCToken is Lockable {
 
   uint8 public decimals = 18;
 
-  uint256 public totalSupply;
+  mapping(address => uint) balances;
 
-  mapping(address => uint256) balances;
+  mapping (address => mapping (address => uint)) private allowed;
 
-  mapping (address => mapping (address => uint256)) private allowed;
+  event Approval(address indexed owner, address indexed spender, uint value);
 
-  event Approval(address indexed owner, address indexed spender, uint256 value);
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
+  event Transfer(address indexed from, address indexed to, uint value);
 
   /**
    * @dev Gets the balance of the specified address.
    * @param owner_ The address to query the the balance of.
-   * @return An uint256 representing the amount owned by the passed address.
+   * @return An uint representing the amount owned by the passed address.
    */
   function balanceOf(address owner_)
     public
     view
-    returns (uint256 balance)
+    returns (uint balance)
   {
     return balances[owner_];
   }
@@ -91,7 +101,7 @@ contract OTCToken is Lockable {
    * @param to_ The address to transfer to.
    * @param value_ The amount to be transferred.
    */
-  function transfer(address to_, uint256 value_)
+  function transfer(address to_, uint value_)
     whenNotLocked
     public
     returns (bool)
@@ -108,9 +118,9 @@ contract OTCToken is Lockable {
    * @dev Transfer tokens from one address to another
    * @param from_ address The address which you want to send tokens from
    * @param to_ address The address which you want to transfer to
-   * @param value_ uint256 the amount of tokens to be transferred
+   * @param value_ uint the amount of tokens to be transferred
    */
-  function transferFrom(address from_, address to_, uint256 value_)
+  function transferFrom(address from_, address to_, uint value_)
     whenNotLocked
     public
     returns (bool)
@@ -140,7 +150,7 @@ contract OTCToken is Lockable {
    * @param spender_ The address which will spend the funds.
    * @param value_ The amount of tokens to be spent.
    */
-  function approve(address spender_, uint256 value_)
+  function approve(address spender_, uint value_)
     whenNotLocked
     public
     returns (bool)
@@ -157,12 +167,12 @@ contract OTCToken is Lockable {
    * @dev Function to check the amount of tokens that an owner allowed to a spender.
    * @param owner_ address The address which owns the funds.
    * @param spender_ address The address which will spend the funds.
-   * @return A uint256 specifying the amount of tokens still available for the spender.
+   * @return A uint specifying the amount of tokens still available for the spender.
    */
   function allowance(address owner_, address spender_)
     view
     public
-    returns (uint256)
+    returns (uint)
   {
     return allowed[owner_][spender_];
   }
