@@ -5,5 +5,33 @@
   "main": "index.js",
   "author": "Anton Adamansky <adamansky@gmail.com>",
   "license": "private",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ajv": "^6.0.0",
+    "bigi": "^1.4.2",
+    "bignumber.js": "4.0.2",
+    "bluebird": "^3.5.1",
+    "js-yaml": "^3.10.0",
+    "knex": "^0.14.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.20.1",
+    "pg": "^7.4.1",
+    "pg-native": "^2.2.0",
+    "pg-types": "^1.13.0",
+    "request": "^2.83.0",
+    "tslib": "^1.8.1",
+    "web3": "0.20.3"
+  },
+  "devDependencies": {
+    "@types/bignumber.js": "4.0.3",
+    "@types/bluebird-global": "^3.5.3",
+    "@types/knex": "^0.14.0",
+    "@types/node": "^8.5.7",
+    "ethereumjs-testrpc": "^6.0.3",
+    "json-schema-to-typescript": "^5.2.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "typescript-logging": "^0.5.0",
+    "web3-typed": "https://github.com/cashila/web3-typed"
+  }
 }
