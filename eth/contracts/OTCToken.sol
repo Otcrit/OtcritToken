@@ -7,7 +7,6 @@ import './ICOToken.sol';
  * @title ERC20 OTC Token https://otcrit.org
  */
 contract OTCToken is ICOToken {
-
   using SafeMath for uint;
 
   /**
@@ -54,18 +53,7 @@ contract OTCToken is ICOToken {
     ReservedICOTokensDistributed(to_, side_, amount_);
   }
 
-  function icoDistribute(address to_, uint amount_)
-    checkICODistribute(amount_)
-    public
-  {
-    availableSupply.sub(amount_);
-    balances[to_] = balances[to_].add(amount_);
-    ICOTokensDistributed(to_, amount_);
-  }
-
-  event ICOTokensDistributed(address indexed to, uint amount);
-
-  event ReservedICOTokensDistributed(address indexed to, uint8 reservedSide, uint amount);
+  event ReservedICOTokensDistributed(address indexed to, uint8 side, uint amount);
 
   //---------------------------- Detailed ERC20 Token
 
@@ -75,44 +63,9 @@ contract OTCToken is ICOToken {
 
   uint8 public decimals = 18;
 
-  mapping(address => uint) balances;
-
   mapping (address => mapping (address => uint)) private allowed;
 
   event Approval(address indexed owner, address indexed spender, uint value);
-
-  event Transfer(address indexed from, address indexed to, uint value);
-
-  /**
-   * @dev Gets the balance of the specified address.
-   * @param owner_ The address to query the the balance of.
-   * @return An uint representing the amount owned by the passed address.
-   */
-  function balanceOf(address owner_)
-    public
-    view
-    returns (uint balance)
-  {
-    return balances[owner_];
-  }
-
-  /**
-   * @dev transfer token for a specified address
-   * @param to_ The address to transfer to.
-   * @param value_ The amount to be transferred.
-   */
-  function transfer(address to_, uint value_)
-    whenNotLocked
-    public
-    returns (bool)
-  {
-    require(to_ != address(0) && value_ <= balances[msg.sender]);
-    // SafeMath.sub will throw if there is not enough balance.
-    balances[msg.sender] = balances[msg.sender].sub(value_);
-    balances[to_] = balances[to_].add(value_);
-    Transfer(msg.sender, to_, value_);
-    return true;
-  }
 
   /**
    * @dev Transfer tokens from one address to another

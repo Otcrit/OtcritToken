@@ -1,8 +1,10 @@
 pragma solidity ^0.4.18;
 
+import './commons/SafeMath.sol';
 import "./flavours/Lockable.sol";
 
 contract ICOToken is Lockable {
+  using SafeMath for uint;
 
   /// @dev ERC20 Total supply
   uint public totalSupply;
@@ -12,6 +14,12 @@ contract ICOToken is Lockable {
 
   /// @dev ICO/Pre-ICO smart contract allowed to distribute public funds for OTCToken
   address public ico;
+
+  mapping(address => uint) balances;
+
+  event Transfer(address indexed from, address indexed to, uint value);
+
+  event ICOTokensDistributed(address indexed to, uint amount);
 
   function ICOToken(address ico_, uint totalSupply_)
     Lockable(true)
@@ -36,5 +44,43 @@ contract ICOToken is Lockable {
     _;
   }
 
-  function icoDistribute(address to_, uint amount_) public;
+   function icoDistribute(address to_, uint amount_)
+    checkICODistribute(amount_)
+    public
+  {
+    availableSupply.sub(amount_);
+    balances[to_] = balances[to_].add(amount_);
+    ICOTokensDistributed(to_, amount_);
+  }
+
+  /**
+   * @dev Gets the balance of the specified address.
+   * @param owner_ The address to query the the balance of.
+   * @return An uint representing the amount owned by the passed address.
+   */
+  function balanceOf(address owner_)
+    public
+    view
+    returns (uint balance)
+  {
+    return balances[owner_];
+  }
+
+  /**
+   * @dev transfer token for a specified address
+   * @param to_ The address to transfer to.
+   * @param value_ The amount to be transferred.
+   */
+  function transfer(address to_, uint value_)
+    whenNotLocked
+    public
+    returns (bool)
+  {
+    require(to_ != address(0) && value_ <= balances[msg.sender]);
+    // SafeMath.sub will throw if there is not enough balance.
+    balances[msg.sender] = balances[msg.sender].sub(value_);
+    balances[to_] = balances[to_].add(value_);
+    Transfer(msg.sender, to_, value_);
+    return true;
+  }
 }
