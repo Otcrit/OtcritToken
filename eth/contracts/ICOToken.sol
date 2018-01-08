@@ -10,7 +10,7 @@ contract ICOToken is Lockable {
   /// @dev Available supply of tokens
   uint public availableSupply;
 
-  /// @dev ICO/Pre-ICO smart contract allowed to distribute funds for OTCToken
+  /// @dev ICO/Pre-ICO smart contract allowed to distribute public funds for OTCToken
   address public ico;
 
   function ICOToken(address ico_, uint totalSupply_)
