@@ -12,13 +12,12 @@ contract OTCToken is ICOToken {
   /**
    * @dev Constructor
    */
-  function OTCToken(address ico_,
-                    uint totalSupplyTokens_,
+  function OTCToken(uint totalSupplyTokens_,
                     uint reservedTeamTokens_,
                     uint reservedPartnersTokens_,
                     uint reservedBountyTokens_,
                     uint reservedOtherTokens_)
-    ICOToken(ico_, totalSupplyTokens_)
+    ICOToken(totalSupplyTokens_)
     public
   {
     require(reservedTeamTokens_
@@ -78,10 +77,7 @@ contract OTCToken is ICOToken {
     public
     returns (bool)
   {
-    require(to_ != address(0));
-    require(value_ <= balances[from_]);
-    require(value_ <= allowed[from_][msg.sender]);
-
+    require(to_ != address(0) && value_ <= balances[from_] && value_ <= allowed[from_][msg.sender]);
     balances[from_] = balances[from_].sub(value_);
     balances[to_] = balances[to_].add(value_);
     allowed[from_][msg.sender] = allowed[from_][msg.sender].sub(value_);

@@ -21,11 +21,11 @@ contract ICOToken is Lockable {
 
   event ICOTokensDistributed(address indexed to, uint amount);
 
-  function ICOToken(address ico_, uint totalSupply_)
+  function ICOToken(uint totalSupply_)
     Lockable(true)
     public
   {
-    ico = ico_;
+    ico = address(0);
     totalSupply = totalSupply_;
     availableSupply = totalSupply_;
   }

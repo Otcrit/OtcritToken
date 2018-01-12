@@ -4,7 +4,8 @@ import "./Ownable.sol";
 
 /**
  * @title Lockable
- * @dev Base contract which allows children to implement main operations locking mechanism.
+ * @dev Base contract which allows children to
+        implement main operations locking mechanism.
  */
 contract Lockable is Ownable {
   event Lock();
