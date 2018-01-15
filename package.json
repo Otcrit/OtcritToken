@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/bignumber.js": "4.0.3",
     "@types/bluebird-global": "^3.5.3",
+    "@types/chai": "4.0.4",
     "@types/knex": "^0.14.0",
     "@types/node": "^8.5.7",
     "ethereumjs-testrpc": "^6.0.3",

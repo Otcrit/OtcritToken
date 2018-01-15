@@ -1,5 +1,8 @@
 .~*
-
+/var
+/static
+*.js
+*.js.*
 
 ### Node template
 # Logs

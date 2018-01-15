@@ -6,9 +6,6 @@ import './BaseICO.sol';
 contract OTCPreICO is BaseICO {
   using SafeMath for uint;
 
-  // @dev 1e18 WEI == 1 ETH
-  uint public constant WEI_ETH_EXCHANGE_RATIO = 1e18;
-
   /// @dev 1e18 WEI == 1ETH == 5000 tokens
   uint public constant WEI_TOKEN_EXCHANGE_RATIO = 2e14;
 
