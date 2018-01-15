@@ -55,7 +55,7 @@ contract OTCPreICO is BaseICO {
     }
   }
 
-  function onInvest(address from_, uint wei_)
+  function onInvestment(address from_, uint wei_)
     onlyOwner
     isActive
     public

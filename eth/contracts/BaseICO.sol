@@ -107,5 +107,5 @@ contract BaseICO is Ownable {
 
   function touch() public;
 
-  function onInvest(address from_, uint wei_) public returns (uint);
+  function onInvestment(address from_, uint wei_) public returns (uint);
 }
