@@ -65,7 +65,7 @@ contract OTCPreICO is BaseICO {
             from_ != address(0) &&
             token != address(0));
     // Apply bonuses
-    uint nwei = bonusPct > 0 ? (wei_ / 100) * bonusPct : wei_;
+    uint nwei = bonusPct > 0 ? wei_.add((wei_ / 100).mul(bonusPct)) : wei_;
     require(nwei >= wei_);
     uint itokens = nwei / WEI_TOKEN_EXCHANGE_RATIO;
     // Transfer tokens to investor
