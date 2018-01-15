@@ -3,6 +3,9 @@ pragma solidity ^0.4.18;
 import './commons/SafeMath.sol';
 import './BaseICO.sol';
 
+/**
+ * @title OTCrit Pre-ICO smart contract.
+ */
 contract OTCPreICO is BaseICO {
   using SafeMath for uint;
 
@@ -24,7 +27,10 @@ contract OTCPreICO is BaseICO {
     hardCapWei = hardCapWei_;
   }
 
-  /// @dev Apply Pre-ICO time dependent rules
+  /**
+   * @dev Recalculate ICO state based on current block time.
+   * Should be called periodically by ICO owner.
+   */
   function touch()
     onlyOwner
     public
@@ -52,6 +58,12 @@ contract OTCPreICO is BaseICO {
     }
   }
 
+  /**
+   * Perform investment in this ICO.
+   * @param from_ Investor address.
+   * @param wei_ Amount of invested weis
+   * @return Amount of actually invested weis including bonuses.
+   */
   function onInvestment(address from_, uint wei_)
     onlyOwner
     isActive
