@@ -44,7 +44,7 @@ contract ICOToken is Lockable {
     _;
   }
 
-  function ICOInvestment(address to_, uint amount_)
+  function icoInvestment(address to_, uint amount_)
     checkICOInvestment(amount_)
     public
     returns (uint)

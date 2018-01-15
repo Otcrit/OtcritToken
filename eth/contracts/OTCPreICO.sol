@@ -69,8 +69,9 @@ contract OTCPreICO is BaseICO {
     require(nwei >= wei_);
     uint itokens = nwei / WEI_TOKEN_EXCHANGE_RATIO;
     // Transfer tokens to investor
-    itokens = token.ICOInvestment(from_, itokens);
+    itokens = token.icoInvestment(from_, itokens);
     uint investedWei = itokens * WEI_TOKEN_EXCHANGE_RATIO;
+    require(investedWei <= nwei);
     collectedWei = collectedWei.add(investedWei);
     ICOInvestment(investedWei);
     // Update ICO state
