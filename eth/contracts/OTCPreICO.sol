@@ -1,57 +1,23 @@
 pragma solidity ^0.4.18;
 
 import './commons/SafeMath.sol';
-import './ICOToken.sol';
+import './BaseICO.sol';
 
-contract OTCPreICO is Ownable {
+contract OTCPreICO is BaseICO {
   using SafeMath for uint;
 
-  enum State {
-    Inactive,
-    Active,
-    Suspended,
-    Terminated,
-    NotCompleted,
-    Completed
-  }
+  // @dev 1e18 WEI == 1 ETH
+  uint public constant WEI_ETH_EXCHANGE_RATIO = 1e18;
 
-  ICOToken public token;
+  /// @dev 1e18 WEI == 1ETH == 5000 tokens
+  uint public constant WEI_TOKEN_EXCHANGE_RATIO = 2e14;
 
-  State public state;
+  /// @dev 15% bonus at start of Pre-ICO
+  uint public bonusPct = 15;
 
-  uint public startAt;
-
-  uint public endAt;
-
-  uint public lowCapWei;
-
-  uint public hardCapWei;
-
-  uint public distributedWei;
-
-  event ICOStarted(uint endAt, uint lowCapWei, uint hardCapWei);
-  event ICOResumed(uint endAt, uint lowCapWei, uint hardCapWei);
-  event ICOSuspended();
-  event ICOTerminated();
-  event ICONotCompleted();
-  event ICOCompleted(uint distributedWei);
-
-  modifier isSuspended() {
-    require(state == State.Suspended);
-    _;
-  }
-
-  modifier isNotSuspended() {
-    require(state != State.Suspended);
-    _;
-  }
-
-  modifier isActive() {
-    require(state == State.Active);
-    _;
-  }
-
-  function PreICO(address icoToken_, uint lowCapWei_, uint hardCapWei_)
+  function PreICO(address icoToken_,
+                  uint lowCapWei_,
+                  uint hardCapWei_)
     public
   {
     require(icoToken_ != address(0));
@@ -61,56 +27,54 @@ contract OTCPreICO is Ownable {
     hardCapWei = hardCapWei_;
   }
 
+  /// @dev Apply Pre-ICO time dependent rules
   function touch()
     onlyOwner
     public
   {
-    if (state != State.Active) {
+    if (state != State.Active &&
+        state != State.Suspended) {
       return;
     }
-    // todo
-  }
-
-  function start(uint endAt_)
-    onlyOwner
-    public
-  {
-    require(endAt_ > block.timestamp);
-    require(state == State.Inactive);
-    endAt = endAt_;
-    ICOStarted(endAt, lowCapWei, hardCapWei);
-  }
-
-  function suspend()
-    onlyOwner
-    public
-  {
-    require(state == State.Active);
-    state = State.Suspended;
-    ICOSuspended();
-  }
-
-  function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_)
-    onlyOwner
-    public
-  {
-    if (endAt_ > block.timestamp) {
-      endAt = endAt_;
+    if (bonusPct != 10 &&
+       (block.timestamp - startAt >= 1 weeks)) {
+      bonusPct = 10; // Decrease bonus to 10%
     }
-    if (lowCapWei_ > 0) {
-      lowCapWei = lowCapWei_;
-    }
-    if (hardCapWei_ > 0) {
-      hardCapWei = hardCapWei_;
+    if (collectedWei >= hardCapWei) {
+      state = State.Completed;
+      endAt = block.timestamp;
+      ICOCompleted(collectedWei);
+    } else if (block.timestamp >= endAt) {
+      if (collectedWei < lowCapWei) {
+        state = State.NotCompleted;
+        ICONotCompleted();
+      } else {
+        state = State.Completed;
+        ICOCompleted(collectedWei);
+      }
     }
   }
 
-  function resume()
+  function onInvest(address from_, uint wei_)
     onlyOwner
+    isActive
     public
+    returns (uint)
   {
-    require(state == State.Suspended);
-    state = State.Active;
-    ICOResumed(endAt, lowCapWei, hardCapWei);
+    require(wei_ != 0 &&
+            from_ != address(0) &&
+            token != address(0));
+    // Apply bonuses
+    uint nwei = bonusPct > 0 ? (wei_ / 100) * bonusPct : wei_;
+    require(nwei >= wei_);
+    uint itokens = nwei / WEI_TOKEN_EXCHANGE_RATIO;
+    // Transfer tokens to investor
+    itokens = token.icoInvest(from_, itokens);
+    uint investedWei = itokens * WEI_TOKEN_EXCHANGE_RATIO;
+    collectedWei = collectedWei.add(investedWei);
+    ICOInvest(investedWei);
+    // Update ICO state
+    touch();
+    return investedWei;
   }
 }

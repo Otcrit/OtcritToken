@@ -19,7 +19,7 @@ contract ICOToken is Lockable {
 
   event Transfer(address indexed from, address indexed to, uint value);
 
-  event ICOTokensDistributed(address indexed to, uint amount);
+  event ICOTokensInvested(address indexed to, uint amount);
 
   function ICOToken(uint totalSupply_)
     Lockable(true)
@@ -38,19 +38,24 @@ contract ICOToken is Lockable {
     ico = ico_;
   }
 
-  modifier checkICODistribute(uint amount_) {
+  modifier checkICOInvest(uint amount_) {
     require(msg.sender == owner || msg.sender == ico);
     require(amount_ >= availableSupply);
     _;
   }
 
-   function icoDistribute(address to_, uint amount_)
-    checkICODistribute(amount_)
+  function icoInvest(address to_, uint amount_)
+    checkICOInvest(amount_)
     public
+    returns (uint)
   {
-    availableSupply.sub(amount_);
+    if (amount_ > availableSupply) {
+      amount_ = availableSupply;
+    }
+    availableSupply -= amount_;
     balances[to_] = balances[to_].add(amount_);
-    ICOTokensDistributed(to_, amount_);
+    ICOTokensInvested(to_, amount_);
+    return amount_;
   }
 
   /**
