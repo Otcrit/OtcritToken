@@ -109,7 +109,9 @@ contract BaseICO is Ownable {
     onlyOwner
     public
   {
-    require(state != State.Terminated);
+    require(state != State.Terminated &&
+            state != State.NotCompleted &&
+            state != State.Completed);
     state = State.Terminated;
     ICOTerminated();
   }
