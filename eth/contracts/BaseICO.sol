@@ -34,7 +34,7 @@ contract BaseICO is Ownable {
   event ICOTerminated();
   event ICONotCompleted();
   event ICOCompleted(uint collectedWei);
-  event ICOInvest(uint investedWei);
+  event ICOInvestment(uint investedWei);
 
   modifier isSuspended() {
     require(state == State.Suspended);

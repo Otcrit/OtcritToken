@@ -38,14 +38,14 @@ contract ICOToken is Lockable {
     ico = ico_;
   }
 
-  modifier checkICOInvest(uint amount_) {
+  modifier checkICOInvestment(uint amount_) {
     require(msg.sender == owner || msg.sender == ico);
     require(amount_ >= availableSupply);
     _;
   }
 
-  function icoInvest(address to_, uint amount_)
-    checkICOInvest(amount_)
+  function ICOInvestment(address to_, uint amount_)
+    checkICOInvestment(amount_)
     public
     returns (uint)
   {
