@@ -53,6 +53,17 @@ contract OTCToken is ICOToken {
   mapping(uint8 => uint) public reserved;
 
   /**
+   * @dev Get recerved tokens for specific side
+   */
+  function getReservedTokens(uint8 side_)
+    view
+    public
+    returns (uint)
+  {
+    return reserved[side_];
+  }
+
+  /**
    * @dev Assign `amount_` of privately distributed tokens
    *      to someone identified with `to_` address.
    * @param to_   Tokens owner

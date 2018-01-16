@@ -24,7 +24,7 @@ function exit(code: number) {
   testrpc = spawn(path.join(__dirname, '../node_modules/.bin/ganache-cli'), args, {
     cwd: __dirname
   });
-  MergeStream(testrpc.stdout, testrpc.stderr).pipe(fs.createWriteStream('testrpc.log'));
+  MergeStream(testrpc.stdout, testrpc.stderr).pipe(fs.createWriteStream('ganache-cli.log'));
   testrpc.on('error', err => {
     console.error(err);
     exit(-1);

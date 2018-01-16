@@ -26,6 +26,9 @@ contract ICOToken is Lockable {
   /// @dev Fired if investment for `amount` of tokens performed by `to` address
   event ICOTokensInvested(address indexed to, uint amount);
 
+  /// @dev Avtive ICO contract changed for this token
+  event ICOChanged(address indexed icoContract);
+
   /**
    * @dev Not mintable, ERC20 compilant token, distributed by ICO/Pre-ICO.
    * @param totalSupply_ Total tokens supply.
@@ -34,7 +37,6 @@ contract ICOToken is Lockable {
     Lockable(true)
     public
   {
-    ico = address(0);
     totalSupply = totalSupply_;
     availableSupply = totalSupply_;
   }
@@ -56,6 +58,7 @@ contract ICOToken is Lockable {
   {
     require(ico_ != address(0));
     ico = ico_;
+    ICOChanged(ico);
   }
 
   /**

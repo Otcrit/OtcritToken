@@ -15,9 +15,9 @@ contract OTCPreICO is BaseICO {
   /// @dev 15% bonus at start of Pre-ICO
   uint public bonusPct = 15;
 
-  function PreICO(address icoToken_,
-                  uint lowCapWei_,
-                  uint hardCapWei_)
+  function OTCPreICO(address icoToken_,
+                     uint lowCapWei_,
+                     uint hardCapWei_)
     public
   {
     require(icoToken_ != address(0));
