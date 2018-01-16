@@ -6,6 +6,11 @@
   "author": "Anton Adamansky <adamansky@gmail.com>",
   "license": "private",
   "private": true,
+
+  "scripts": {
+    "test": "tsc && node eth/run-tests.js"
+  },
+
   "dependencies": {
     "ajv": "^6.0.0",
     "bigi": "^1.4.2",
