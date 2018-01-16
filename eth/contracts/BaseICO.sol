@@ -125,7 +125,7 @@ contract BaseICO is Ownable {
    */
   function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_)
     onlyOwner
-    //isSuspended
+    isSuspended
     public
   {
     if (endAt_ > block.timestamp) {
