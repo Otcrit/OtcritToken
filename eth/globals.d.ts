@@ -1,5 +1,4 @@
 /// <reference path="../node_modules/web3-typed/callback/web3/index.d.ts" />
-/// <reference path="../node_modules/@types/chai/index.d.ts" />
 
 import * as Web3 from 'web3';
 import { TransactionReceipt, Contract } from 'web3';
@@ -17,7 +16,7 @@ interface IContractOptions {
 }
 
 interface IContract<T> {
-  'new'(): Promise<T>;
+  'new'(...args: any[]): Promise<T>;
   deployed(): Promise<T>;
   at(address: address): Promise<T>;
   setProvider(provider: Web3.providers.Provider): void;

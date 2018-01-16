@@ -1,6 +1,16 @@
 /// <reference path="../node_modules/web3-typed/callback/web3/index.d.ts" />
-import { IContractInstance, ISimpleCallable, address } from './globals';
+import { IContractInstance, ISimpleCallable, address, IContract } from './globals';
 import { NumberLike } from 'bignumber.js';
+
+interface Artifacts {
+  require(name: './OTCToken.sol'): IContract<IOTCToken>;
+  require(name: './OTCPreICO.sol'): IContract<IOTCPreICO>;
+  require(name: './Migrations.sol'): IContract<IContractInstance>;
+}
+
+declare global {
+  const artifacts: Artifacts;
+}
 
 /**
  * The Ownable contract has an owner address, and provides basic authorization control

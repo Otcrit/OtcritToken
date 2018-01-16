@@ -3,6 +3,7 @@
 /static
 *.js
 *.js.*
+*.log
 
 ### Node template
 # Logs
