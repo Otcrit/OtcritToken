@@ -13,6 +13,17 @@ declare global {
   const artifacts: Artifacts;
 }
 
+declare const enum TokenReservation {
+  // Tokens for team members
+  Team = 0x1,
+  // Tokens for bounty participants
+  Bounty = 0x2,
+  //Tokens for OTCRIT partners
+  Partners = 0x4,
+  // Other privately distributed tokens
+  Others = 0x8
+}
+
 declare const enum ICOState {
   // ICO is not active and not started
   Inactive = 0,
@@ -87,14 +98,16 @@ interface ICOToken extends IContractInstance, ILocable {
    * @param owner The address to query the the balance of.
    * @return An uint representing the amount owned by the passed address.
    */
-  balanceOf(owner: address, tr?: Web3.TransactionRequest): Promise<NumberLike>;
+  balanceOf: {
+    call(owner: address, tr?: Web3.TransactionRequest): Promise<NumberLike>;
+  }
 
   /**
    * Transfer token for a specified address
    * @param to The address to transfer to.
    * @param value The amount to be transferred.
    */
-  transfer(to: address, value: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  transfer(to: address, value: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }
 
 /**
@@ -111,7 +124,7 @@ interface IOTCToken extends ICOToken {
   decimals: ISimpleCallable<NumberLike>;
 
   getReservedTokens: {
-    call(side: number, tr?: Web3.TransactionRequest): Promise<NumberLike>;
+    call(side: TokenReservation, tr?: Web3.TransactionRequest): Promise<NumberLike>;
   };
 
   /**
@@ -121,7 +134,7 @@ interface IOTCToken extends ICOToken {
    * @param side Group identifier of privately distributed tokens
    * @param amount Number of tokens distributed
    */
-  reserve(to: address, side: number, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  reserve(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
   /**
    * @dev Transfer tokens from one address to another

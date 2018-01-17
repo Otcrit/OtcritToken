@@ -75,7 +75,7 @@ contract OTCToken is ICOToken {
     public
   {
     require(to_ != address(0) && (side_ & 0xf) != 0);
-    availableSupply.sub(amount_);
+    availableSupply = availableSupply.sub(amount_);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);

@@ -78,8 +78,7 @@ contract BaseICO is Ownable {
     onlyOwner
     public
   {
-    require(endAt_ > block.timestamp);
-    require(state == State.Inactive);
+    require(endAt_ > block.timestamp && state == State.Inactive);
     endAt = endAt_;
     startAt = block.timestamp;
     state = State.Active;

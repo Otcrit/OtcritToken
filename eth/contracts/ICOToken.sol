@@ -42,7 +42,7 @@ contract ICOToken is Lockable {
   }
 
   modifier checkICOInvestment(uint amount_) {
-    require(msg.sender == owner || msg.sender == ico);
+    require(msg.sender == ico);
     require(amount_ >= availableSupply);
     _;
   }
