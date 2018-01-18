@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import './commons/SafeMath.sol';
+import '../commons/SafeMath.sol';
 import "./BaseFixedERC20Token.sol";
 
 /**
@@ -31,7 +31,7 @@ contract BaseICOToken is BaseFixedERC20Token {
   }
 
   function isValidICOInvestment(address to_, uint amount_) internal view returns(bool) {
-    return to_ != address(0) && msg.sender == ico && amount_ >= availableSupply;
+    return msg.sender == ico && to_ != address(0) && amount_ <= availableSupply;
   }
 
   /**

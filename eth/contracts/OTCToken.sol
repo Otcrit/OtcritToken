@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import './commons/SafeMath.sol';
-import './BaseICOToken.sol';
+import './base/BaseICOToken.sol';
 
 /**
  * @title ERC20 OTC Token https://otcrit.org
@@ -79,7 +79,6 @@ contract OTCToken is BaseICOToken {
    */
   function reserve(address to_, uint8 side_, uint amount_) onlyOwner public {
     require(to_ != address(0) && (side_ & 0xf) != 0);
-    amount_ = amount_ * ONE_TOKEN;
     availableSupply = availableSupply.sub(amount_);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);

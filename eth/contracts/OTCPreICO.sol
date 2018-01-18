@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import './commons/SafeMath.sol';
-import './BaseICO.sol';
+import './base/BaseICO.sol';
 
 /**
  * @title OTCrit Pre-ICO smart contract.
@@ -18,7 +18,7 @@ contract OTCPreICO is BaseICO {
   /// @dev 15% bonus at start of Pre-ICO
   uint public bonusPct = 15;
 
-  event OTCPreICOCreated(address icoToken, uint lowCapWei, uint hardCapWei);
+  event ICOStarted(address icoToken, uint lowCapWei, uint hardCapWei);
 
   function OTCPreICO(address icoToken_, uint lowCapWei_, uint hardCapWei_) public {
     require(icoToken_ != address(0));
@@ -26,7 +26,7 @@ contract OTCPreICO is BaseICO {
     state = State.Inactive;
     lowCapWei = lowCapWei_;
     hardCapWei = hardCapWei_;
-    OTCPreICOCreated(icoToken_, lowCapWei_, hardCapWei_);
+    ICOStarted(icoToken_, lowCapWei_, hardCapWei_);
   }
 
   /**
@@ -61,18 +61,17 @@ contract OTCPreICO is BaseICO {
    * @param wei_ Amount of invested weis
    * @return Amount of actually invested weis including bonuses.
    */
-  function onInvestment(address from_, uint wei_) onlyOwner isActive public returns (uint) {
+  function onInvestment(address from_, uint wei_) onlyOwner isActive public {
     require(wei_ != 0 && from_ != address(0) && token != address(0));
     // Apply bonuses
     // todo review rounding error
-    uint iwei = bonusPct > 0 ? wei_.add((wei_ / 100).mul(bonusPct)) : wei_;
+    uint iwei = bonusPct > 0 ? wei_.mul(100 + bonusPct).div(100) : wei_;
     require(iwei >= wei_);
     uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
     token.icoInvestment(from_, itokens); // Transfer tokens to investor
     collectedWei = collectedWei.add(iwei);
     ICOInvestment(iwei, itokens);
     touch(); // Update ICO state
-    return iwei;
   }
 
   /**

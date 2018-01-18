@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
-import './commons/SafeMath.sol';
-import "./flavours/Lockable.sol";
+import '../commons/SafeMath.sol';
+import "../flavours/Lockable.sol";
 
 contract BaseFixedERC20Token is Lockable {
   using SafeMath for uint;

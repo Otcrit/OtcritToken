@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import './flavours/Ownable.sol';
+import '../flavours/Ownable.sol';
 import './BaseICOToken.sol';
 
 /**
@@ -146,5 +146,5 @@ contract BaseICO is Ownable {
    * @param wei_ Amount of invested weis
    * @return Amount of actually invested weis including bonuses.
    */
-  function onInvestment(address from_, uint wei_) public returns (uint);
+  function onInvestment(address from_, uint wei_) public;
 }

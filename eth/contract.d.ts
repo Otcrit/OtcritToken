@@ -70,6 +70,7 @@ interface ILocable extends IOwnable {
  * Not mintable, ERC20 compilant token, distributed by ICO/Pre-ICO.
  */
 interface ICOToken extends IContractInstance, ILocable {
+
   // ERC20 Total supply
   totalSupply: ISimpleCallable<NumberLike>;
 
@@ -248,7 +249,7 @@ interface IBaseICO extends IContractInstance, IOwnable {
    * @param wei Amount of invested weis
    * @return Amount of actually invested weis including bonuses.
    */
-  onInvestment(from: address, wei: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  onInvestment(from: address, wei: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }
 
 /**
