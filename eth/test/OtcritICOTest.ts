@@ -54,7 +54,9 @@ contract('OTCPreICO', function(accounts: string[]) {
   it('should pre-ico contract deployed', async () => {
     const token = await OTCToken.deployed();
     // Create preICO contract
-    preIco = await OTCPreICO.new(token.address, new BigNumber('200e18'), new BigNumber('1500e18'));
+    preIco = await OTCPreICO.new(token.address, new BigNumber('200e18'), new BigNumber('1500e18'), {
+      from: actors.owner.address
+    });
     assert.equal(await preIco.token.call(), token.address);
     assert.equal((await preIco.lowCapWei.call()).toString(), new BigNumber('200e18').toString());
     assert.equal((await preIco.hardCapWei.call()).toString(), new BigNumber('1500e18').toString());
@@ -132,7 +134,7 @@ contract('OTCPreICO', function(accounts: string[]) {
     await ico.start(endAt, { from: actors.owner.address });
     assert.equal(await ico.state.call(), ICOState.Active);
     assert.equal(await ico.endAt.call(), endAt);
-    const startAt: number = +(await ico.startAt.call());
+    const startAt: number = +await ico.startAt.call();
     assert.isTrue(endAt - startAt >= 100);
     // todo
   });

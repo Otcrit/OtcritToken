@@ -25,16 +25,14 @@ contract OTCPreICO is BaseICO {
     state = State.Inactive;
     lowCapWei = lowCapWei_;
     hardCapWei = hardCapWei_;
+    // fire Crowdsale
   }
 
   /**
    * @dev Recalculate ICO state based on current block time.
    * Should be called periodically by ICO owner.
    */
-  function touch()
-    onlyOwner
-    public
-  {
+  function touch() onlyOwner public {
     if (state != State.Active &&
         state != State.Suspended) {
       return;
@@ -64,12 +62,7 @@ contract OTCPreICO is BaseICO {
    * @param wei_ Amount of invested weis
    * @return Amount of actually invested weis including bonuses.
    */
-  function onInvestment(address from_, uint wei_)
-    onlyOwner
-    isActive
-    public
-    returns (uint)
-  {
+  function onInvestment(address from_, uint wei_) onlyOwner isActive public returns (uint) {
     require(wei_ != 0 &&
             from_ != address(0) &&
             token != address(0));
@@ -86,5 +79,10 @@ contract OTCPreICO is BaseICO {
     // Update ICO state
     touch();
     return investedWei;
+  }
+
+  // Disable direct payments
+  function() external payable {
+    revert();
   }
 }

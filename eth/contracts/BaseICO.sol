@@ -74,10 +74,7 @@ contract BaseICO is Ownable {
    * @dev Trigger start of ICO.
    * @param endAt_ ICO end date, seconds since epoch.
    */
-  function start(uint endAt_)
-    onlyOwner
-    public
-  {
+  function start(uint endAt_) onlyOwner public {
     require(endAt_ > block.timestamp && state == State.Inactive);
     endAt = endAt_;
     startAt = block.timestamp;
@@ -91,11 +88,7 @@ contract BaseICO is Ownable {
    * In suspend state, ICO owner can change basic ICO paraneter using `tune()` function,
    * tokens cannot be distributed among investors.
    */
-  function suspend()
-    onlyOwner
-    isActive
-    public
-  {
+  function suspend() onlyOwner isActive public {
     state = State.Suspended;
     ICOSuspended();
   }
@@ -104,10 +97,7 @@ contract BaseICO is Ownable {
    * @dev Terminate the ICO.
    * ICO goals are not reached, ICO terminated and cannot be resumed.
    */
-  function terminate()
-    onlyOwner
-    public
-  {
+  function terminate() onlyOwner public {
     require(state != State.Terminated &&
             state != State.NotCompleted &&
             state != State.Completed);
@@ -122,11 +112,7 @@ contract BaseICO is Ownable {
    * @param lowCapWei_ ICO low capacity. Used if it is not zero.
    * @param hardCapWei_ ICO hard capacity. Used if it is not zero.
    */
-  function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_)
-    onlyOwner
-    isSuspended
-    public
-  {
+  function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_) onlyOwner isSuspended public {
     if (endAt_ > block.timestamp) {
       endAt = endAt_;
     }
@@ -142,11 +128,7 @@ contract BaseICO is Ownable {
   /**
    * @dev Resume a previously suspended ICO.
    */
-  function resume()
-    onlyOwner
-    isSuspended
-    public
-  {
+  function resume() onlyOwner isSuspended public {
     state = State.Active;
     ICOResumed(endAt, lowCapWei, hardCapWei);
     touch();

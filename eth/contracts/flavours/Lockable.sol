@@ -13,13 +13,6 @@ contract Lockable is Ownable {
 
   bool public locked = false;
 
-  function Lockable(bool locked_)
-    Ownable()
-    public
-  {
-    locked = locked_;
-  }
-
   /**
    * @dev Modifier to make a function callable
   *       only when the contract is not locked.
@@ -41,11 +34,7 @@ contract Lockable is Ownable {
   /**
    * @dev called by the owner to locke, triggers locked state
    */
-  function lock()
-    onlyOwner
-    whenNotLocked
-    public
-  {
+  function lock() onlyOwner whenNotLocked public {
     locked = true;
     Lock();
   }
@@ -54,11 +43,7 @@ contract Lockable is Ownable {
    * @dev called by the owner
    *      to unlock, returns to unlocked state
    */
-  function unlock()
-    onlyOwner
-    whenLocked
-    public
-  {
+  function unlock() onlyOwner whenLocked public {
     locked = false;
     Unlock();
   }
