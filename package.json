@@ -6,11 +6,9 @@
   "author": "Anton Adamansky <adamansky@gmail.com>",
   "license": "private",
   "private": true,
-
   "scripts": {
     "test": "tsc && node eth/run-tests.js"
   },
-
   "dependencies": {
     "ajv": "^6.0.0",
     "bigi": "^1.4.2",
@@ -27,7 +25,7 @@
     "web3": "0.20.3"
   },
   "devDependencies": {
-    "@types/bignumber.js": "4.0.3",
+    "@types/bignumber.js": "4.0.2",
     "@types/bluebird-global": "^3.5.3",
     "@types/chai": "4.0.4",
     "@types/knex": "^0.14.0",

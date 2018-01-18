@@ -15,6 +15,8 @@ contract OTCToken is BaseICOToken {
 
   uint8 public decimals = 18;
 
+  uint internal constant ONE_TOKEN = 1e18;
+
   /**
    * @dev Constructor
    * @param totalSupplyTokens_ Total amount of tokens supplied
@@ -28,17 +30,15 @@ contract OTCToken is BaseICOToken {
                     uint reservedPartnersTokens_,
                     uint reservedBountyTokens_,
                     uint reservedOtherTokens_)
-    BaseICOToken(totalSupplyTokens_)
-    public
-  {
+    BaseICOToken(totalSupplyTokens_ * ONE_TOKEN) public {
     require(reservedTeamTokens_
             .add(reservedBountyTokens_)
             .add(reservedPartnersTokens_)
-            .add(reservedOtherTokens_) <= totalSupply);
-    reserved[RESERVED_TEAM_SIDE] = reservedTeamTokens_;
-    reserved[RESERVED_BOUNTY_SIDE] = reservedBountyTokens_;
-    reserved[RESERVED_PARTNERS_SIDE] = reservedPartnersTokens_;
-    reserved[RESERVED_OTHERS_SIDE] = reservedOtherTokens_;
+            .add(reservedOtherTokens_) <= totalSupplyTokens_);
+    reserved[RESERVED_TEAM_SIDE] = reservedTeamTokens_ * ONE_TOKEN;
+    reserved[RESERVED_BOUNTY_SIDE] = reservedBountyTokens_ * ONE_TOKEN;
+    reserved[RESERVED_PARTNERS_SIDE] = reservedPartnersTokens_ * ONE_TOKEN;
+    reserved[RESERVED_OTHERS_SIDE] = reservedOtherTokens_ * ONE_TOKEN;
   }
 
   // Disable direct payments
@@ -79,6 +79,7 @@ contract OTCToken is BaseICOToken {
    */
   function reserve(address to_, uint8 side_, uint amount_) onlyOwner public {
     require(to_ != address(0) && (side_ & 0xf) != 0);
+    amount_ = amount_ * ONE_TOKEN;
     availableSupply = availableSupply.sub(amount_);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);

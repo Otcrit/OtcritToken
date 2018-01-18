@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import './flavours/Ownable.sol';
-import './ICOToken.sol';
+import './BaseICOToken.sol';
 
 /**
  * @dev Base abstract smart contract for any OTCrit ICO
@@ -30,7 +30,7 @@ contract BaseICO is Ownable {
   }
 
   /// @dev Token which controlled by this ICO
-  ICOToken public token;
+  BaseICOToken public token;
 
   /// @dev Current ICO state.
   State public state;
@@ -58,7 +58,7 @@ contract BaseICO is Ownable {
   event ICOTerminated();
   event ICONotCompleted();
   event ICOCompleted(uint collectedWei);
-  event ICOInvestment(uint investedWei);
+  event ICOInvestment(uint investedWei, uint tokens);
 
   modifier isSuspended() {
     require(state == State.Suspended);

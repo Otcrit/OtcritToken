@@ -9,23 +9,24 @@ import './BaseICO.sol';
 contract OTCPreICO is BaseICO {
   using SafeMath for uint;
 
+  /// @dev 18 decimals for token
+  uint internal constant ONE_TOKEN = 1e18;
+
   /// @dev 1e18 WEI == 1ETH == 5000 tokens
-  uint public constant WEI_TOKEN_EXCHANGE_RATIO = 2e14;
+  uint public constant ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
   /// @dev 15% bonus at start of Pre-ICO
   uint public bonusPct = 15;
 
-  function OTCPreICO(address icoToken_,
-                     uint lowCapWei_,
-                     uint hardCapWei_)
-    public
-  {
+  event OTCPreICOCreated(address icoToken, uint lowCapWei, uint hardCapWei);
+
+  function OTCPreICO(address icoToken_, uint lowCapWei_, uint hardCapWei_) public {
     require(icoToken_ != address(0));
-    token = ICOToken(icoToken_);
+    token = BaseICOToken(icoToken_);
     state = State.Inactive;
     lowCapWei = lowCapWei_;
     hardCapWei = hardCapWei_;
-    // fire Crowdsale
+    OTCPreICOCreated(icoToken_, lowCapWei_, hardCapWei_);
   }
 
   /**
@@ -33,12 +34,10 @@ contract OTCPreICO is BaseICO {
    * Should be called periodically by ICO owner.
    */
   function touch() onlyOwner public {
-    if (state != State.Active &&
-        state != State.Suspended) {
+    if (state != State.Active && state != State.Suspended) {
       return;
     }
-    if (bonusPct != 10 &&
-       (block.timestamp - startAt >= 1 weeks)) {
+    if (bonusPct != 10 && (block.timestamp - startAt >= 1 weeks)) {
       bonusPct = 10; // Decrease bonus to 10%
     }
     if (collectedWei >= hardCapWei) {
@@ -63,25 +62,22 @@ contract OTCPreICO is BaseICO {
    * @return Amount of actually invested weis including bonuses.
    */
   function onInvestment(address from_, uint wei_) onlyOwner isActive public returns (uint) {
-    require(wei_ != 0 &&
-            from_ != address(0) &&
-            token != address(0));
+    require(wei_ != 0 && from_ != address(0) && token != address(0));
     // Apply bonuses
-    uint nwei = bonusPct > 0 ? wei_.add((wei_ / 100).mul(bonusPct)) : wei_;
-    require(nwei >= wei_);
-    uint itokens = nwei / WEI_TOKEN_EXCHANGE_RATIO;
-    // Transfer tokens to investor
-    itokens = token.icoInvestment(from_, itokens);
-    uint investedWei = itokens * WEI_TOKEN_EXCHANGE_RATIO;
-    require(investedWei <= nwei);
-    collectedWei = collectedWei.add(investedWei);
-    ICOInvestment(investedWei);
-    // Update ICO state
-    touch();
-    return investedWei;
+    // todo review rounding error
+    uint iwei = bonusPct > 0 ? wei_.add((wei_ / 100).mul(bonusPct)) : wei_;
+    require(iwei >= wei_);
+    uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
+    token.icoInvestment(from_, itokens); // Transfer tokens to investor
+    collectedWei = collectedWei.add(iwei);
+    ICOInvestment(iwei, itokens);
+    touch(); // Update ICO state
+    return iwei;
   }
 
-  // Disable direct payments
+  /**
+   * Disable direct payments
+   */
   function() external payable {
     revert();
   }
