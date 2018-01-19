@@ -94,14 +94,12 @@ Investors are able to returns theirs funds.
 1. `Website` generates unique ID for investor
 1. Upon request `Website` generates eth address (using BIP32 HD wallet) dedicated to `investor` used as endpoint for investment payments from this particular investor.
 <br>**NOTE:** `Investor` does not own generated endpoint address. `PK` of this address owned by `token owner`.
-<br>**NOTE:** `Website` software signs endpoint address by token owner private key and store signature hash in `DB`.
 We have the following tables in website `DB`:
 ```
 INVESTORS:
  investor id,
  investor email,
  endpoint eth address,
- signature hash of endpoint address (signed by token owner),
 
 INVESTMENTS:
  investor id,
@@ -115,7 +113,6 @@ INVESTMENTS:
 1. `Website` software listens eth network (using parity client) for investment transactions and calls pre-ico
 contract updating amount of tokens belonging to investor. `Pre-ico` contract received the following data:
    * endpoint address
-   * signature of endpoint address (signed by token owner)
 1. pre-ico contract updates token distribution for investor using endpoint balance.
 
 # How to control/admin Token and ICO?
