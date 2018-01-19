@@ -35,13 +35,13 @@ declare const enum ICOState {
   // ICO parameters (end date, hard/low caps) may changed.
   Suspended = 2,
   // ICO is termnated by owner, ICO cannot be resumed.
-  Terminated,
+  Terminated = 3,
   // ICO goals are not reached,
   // ICO terminated and cannot be resumed.
-  NotCompleted = 3,
+  NotCompleted = 4,
   // ICO completed, ICO goals reached successfully,
   // ICO terminated and cannot be resumed.
-  Completed = 4
+  Completed = 5
 }
 
 /**
@@ -247,7 +247,6 @@ interface IBaseICO extends IContractInstance, IOwnable {
    * Perform investment in this ICO.
    * @param from Investor address.
    * @param wei Amount of invested weis
-   * @return Amount of actually invested weis including bonuses.
    */
   onInvestment(from: address, wei: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }

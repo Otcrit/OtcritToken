@@ -8,7 +8,7 @@ import { NumberLike } from 'bignumber.js';
 const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 
-const ONE_TOKEN = new BigNumber("1e18");
+const ONE_TOKEN = new BigNumber('1e18');
 const ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
 function tokens(val: NumberLike): string {
@@ -16,7 +16,10 @@ function tokens(val: NumberLike): string {
 }
 
 function tokens2wei(val: NumberLike): string {
-  return new BigNumber(val).times(ONE_TOKEN).divToInt(ETH_TOKEN_EXCHANGE_RATIO).toString();
+  return new BigNumber(val)
+    .times(ONE_TOKEN)
+    .divToInt(ETH_TOKEN_EXCHANGE_RATIO)
+    .toString();
 }
 
 function wei2rawtokens(val: NumberLike): string {
@@ -33,11 +36,12 @@ contract('OTCRIT', function(accounts: string[]) {
     owner: accounts[cnt++],
     someone1: accounts[cnt++],
     someone2: accounts[cnt++],
-    team1:  accounts[cnt++],
-    team2:  accounts[cnt++],
+    team1: accounts[cnt++],
+    team2: accounts[cnt++],
     bounty1: accounts[cnt++],
     investor1: accounts[cnt++],
-    investor2: accounts[cnt++]
+    investor2: accounts[cnt++],
+    investor3: accounts[cnt++]
   } as { [k: string]: string };
   console.log('Actors: ', actors);
 
@@ -120,8 +124,9 @@ contract('OTCRIT', function(accounts: string[]) {
     // check reserved tokens for bounty
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6 - 2e6));
     // Do not allow reserve more than allowed tokens
-    await assertEvmInvalidOpcode(token.reserve(actors.bounty1, TokenReservation.Bounty,
-      tokens(10e6 - 2e6 + 1), { from: actors.owner }));
+    await assertEvmInvalidOpcode(
+      token.reserve(actors.bounty1, TokenReservation.Bounty, tokens(10e6 - 2e6 + 1), { from: actors.owner })
+    );
   });
 
   it('should public token operations be locked during ICO', async () => {
@@ -130,11 +135,12 @@ contract('OTCRIT', function(accounts: string[]) {
     await assertEvmThrows(token.transfer(actors.someone1, 1, { from: actors.team1 }));
   });
 
-  it('should start preICO and perform outside investment then second week investment', async () => {
+  it('check preICO investements, start/end  dates', async () => {
     const token = await OTCToken.deployed();
     assert.isTrue(preIco != null);
     const ico = preIco!!;
     assert.equal(await ico.state.call(), ICOState.Inactive);
+    // ICO will end in 2 weeks
     const endAt = web3LatestTime() + Seconds.weeks(2);
     await ico.start(endAt, { from: actors.owner });
     assert.equal(await ico.state.call(), ICOState.Active);
@@ -146,30 +152,72 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await ico.token.call(), token.address);
 
     // Perform investements (investor1)
-    let txres = await ico.onInvestment(actors.investor1, tokens2wei(5000), {from: actors.owner});
+    let investor1Tokens = new BigNumber(0);
+    let txres = await ico.onInvestment(actors.investor1, tokens2wei(5000), { from: actors.owner });
     assert.equal(txres.logs[0].event, 'ICOInvestment');
-    assert.equal(txres.logs[0].args.investedWei, new BigNumber(tokens2wei(5000)).mul(115).divToInt(100).toString());
+    assert.equal(
+      txres.logs[0].args.investedWei,
+      new BigNumber(tokens2wei(5000))
+        .mul(115)
+        .divToInt(100)
+        .toString()
+    );
+    investor1Tokens = investor1Tokens.add(txres.logs[0].args.tokens);
     assert.equal(txres.logs[0].args.tokens, wei2rawtokens(txres.logs[0].args.investedWei).toString());
     assert.equal(await token.balanceOf.call(actors.investor1), txres.logs[0].args.tokens.toString());
 
     // Perform investements (investor2)
-    txres = await ico.onInvestment(actors.investor2, tokens2wei(15000), {from: actors.owner});
+    txres = await ico.onInvestment(actors.investor2, tokens2wei(15000), { from: actors.owner });
     assert.equal(txres.logs[0].event, 'ICOInvestment');
-    assert.equal(txres.logs[0].args.investedWei, new BigNumber(tokens2wei(15000)).mul(115).divToInt(100).toString());
+    assert.equal(txres.logs[0].args.bonusPct, 15);
+    assert.equal(
+      txres.logs[0].args.investedWei,
+      new BigNumber(tokens2wei(15000))
+        .mul(115)
+        .divToInt(100)
+        .toString()
+    );
     assert.equal(txres.logs[0].args.tokens, wei2rawtokens(txres.logs[0].args.investedWei).toString());
+    assert.equal(txres.logs[0].args.from, actors.investor2);
     assert.equal(await token.balanceOf.call(actors.investor2), txres.logs[0].args.tokens.toString());
 
-    // Skip one week
-    // await web3IncreaseTime(Seconds.weeks(2));
+    // + 1 week
+    await web3IncreaseTime(Seconds.weeks(1));
+    txres = await ico.onInvestment(actors.investor1, tokens2wei(5000), { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ICOInvestment');
+    assert.equal(txres.logs[0].args.bonusPct, 10);
+    assert.equal(
+      txres.logs[0].args.investedWei,
+      new BigNumber(tokens2wei(5000))
+        .mul(110)
+        .divToInt(100)
+        .toString()
+    );
+    assert.equal(txres.logs[0].args.tokens, wei2rawtokens(txres.logs[0].args.investedWei).toString());
+    investor1Tokens = investor1Tokens.add(txres.logs[0].args.tokens);
+    assert.equal(await token.balanceOf.call(actors.investor1), investor1Tokens.toString());
 
-    // txres = await ico.onInvestment(actors.investor1, tokens2wei(5000), {from: actors.owner});
-    // assert.equal(txres.logs[0].event, 'ICOInvestment');
-    // assert.equal(txres.logs[0].args.investedWei, new BigNumber(tokens2wei(5000)).mul(115).divToInt(100).toString());
-    // assert.equal(txres.logs[0].args.tokens, wei2rawtokens(txres.logs[0].args.investedWei).toString());
+    // Perform rest of investment required to fill low-cap
+    let requiredWei = new BigNumber(await ico.lowCapWei.call());
+    requiredWei = requiredWei.sub(await ico.collectedWei.call());
+    txres = await ico.onInvestment(actors.investor3, requiredWei, { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ICOInvestment');
 
-    // const startAt: number = +await ico.startAt.call();
-    // assert.isTrue(endAt - startAt >= 100);
-    // todo
+    // Ensure collectedWei equal lowCapWei
+    assert.equal((await ico.lowCapWei.call()).toString(), (await ico.collectedWei.call()).toString());
+
+    // +1 week will force end of preICO.
+    await web3IncreaseTime(Seconds.weeks(1));
+    txres = await ico.touch({ from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ICOCompleted');
+
+    // Check preICO state
+    assert.equal(await ico.state.call(), ICOState.Completed);
+
+    // Try to invest outside of preICO
+    txres = await ico.onInvestment(actors.investor1, tokens2wei(1), { from: actors.owner });
+    // Ensure that no investment logs was fired
+    assert.equal(txres.logs.length, 0);
   });
 });
 

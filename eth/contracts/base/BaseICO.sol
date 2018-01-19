@@ -52,13 +52,13 @@ contract BaseICO is Ownable {
   uint public collectedWei;
 
   // ICO state transition events
-  event ICOStarted(uint endAt, uint lowCapWei, uint hardCapWei);
-  event ICOResumed(uint endAt, uint lowCapWei, uint hardCapWei);
+  event ICOStarted(uint indexed endAt, uint lowCapWei, uint hardCapWei);
+  event ICOResumed(uint indexed endAt, uint lowCapWei, uint hardCapWei);
   event ICOSuspended();
   event ICOTerminated();
   event ICONotCompleted();
   event ICOCompleted(uint collectedWei);
-  event ICOInvestment(uint investedWei, uint tokens);
+  event ICOInvestment(address indexed from, uint investedWei, uint tokens, uint8 bonusPct);
 
   modifier isSuspended() {
     require(state == State.Suspended);

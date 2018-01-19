@@ -16,7 +16,7 @@ contract OTCPreICO is BaseICO {
   uint public constant ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
   /// @dev 15% bonus at start of Pre-ICO
-  uint public bonusPct = 15;
+  uint8 public bonusPct = 15;
 
   event ICOStarted(address icoToken, uint lowCapWei, uint hardCapWei);
 
@@ -59,19 +59,19 @@ contract OTCPreICO is BaseICO {
    * Perform investment in this ICO.
    * @param from_ Investor address.
    * @param wei_ Amount of invested weis
-   * @return Amount of actually invested weis including bonuses.
    */
-  function onInvestment(address from_, uint wei_) onlyOwner isActive public {
+  function onInvestment(address from_, uint wei_) onlyOwner public {
     require(wei_ != 0 && from_ != address(0) && token != address(0));
-    // Apply bonuses
-    // todo review rounding error
-    uint iwei = bonusPct > 0 ? wei_.mul(100 + bonusPct).div(100) : wei_;
-    require(iwei >= wei_);
-    uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
-    token.icoInvestment(from_, itokens); // Transfer tokens to investor
-    collectedWei = collectedWei.add(iwei);
-    ICOInvestment(iwei, itokens);
-    touch(); // Update ICO state
+    touch();
+    if (state == State.Active) {
+      // todo rounding errors?
+      uint iwei = bonusPct > 0 ? wei_.mul(100 + bonusPct).div(100) : wei_;
+      uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
+      token.icoInvestment(from_, itokens); // Transfer tokens to investor
+      collectedWei = collectedWei.add(wei_);
+      ICOInvestment(from_, iwei, itokens, bonusPct);
+      touch();
+    }
   }
 
   /**
