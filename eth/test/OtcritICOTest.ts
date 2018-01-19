@@ -135,7 +135,7 @@ contract('OTCRIT', function(accounts: string[]) {
     await assertEvmThrows(token.transfer(actors.someone1, 1, { from: actors.team1 }));
   });
 
-  it('check preICO investements, start/end  dates', async () => {
+  it('check preICO investements, preICO start-to-completed lifecycle', async () => {
     const token = await OTCToken.deployed();
     assert.isTrue(preIco != null);
     const ico = preIco!!;
