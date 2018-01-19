@@ -122,7 +122,7 @@ contract BaseICO is Ownable {
     if (hardCapWei_ > 0) {
       hardCapWei = hardCapWei_;
     }
-    //touch();
+    touch();
   }
 
   /**
