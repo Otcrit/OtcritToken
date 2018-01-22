@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/web3-typed/callback/web3/index.d.ts" />
+import 'web3-typed/callback/web3';
 import * as Web3 from 'web3';
 import { IContractInstance, ISimpleCallable, address, IContract, ITXResult } from './globals';
 import { NumberLike } from 'bignumber.js';
