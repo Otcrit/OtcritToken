@@ -1,0 +1,3714 @@
+{
+  "contractName": "BaseICO",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "resume",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "terminate",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endAt_",
+          "type": "uint256"
+        },
+        {
+          "name": "lowCapWei_",
+          "type": "uint256"
+        },
+        {
+          "name": "hardCapWei_",
+          "type": "uint256"
+        }
+      ],
+      "name": "tune",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "endAt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "from_",
+          "type": "address"
+        },
+        {
+          "name": "wei_",
+          "type": "uint256"
+        }
+      ],
+      "name": "onInvestment",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endAt_",
+          "type": "uint256"
+        }
+      ],
+      "name": "start",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "touch",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "state",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "startAt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "suspend",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "hardCapWei",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "collectedWei",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "lowCapWei",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "token",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "endAt",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "lowCapWei",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "hardCapWei",
+          "type": "uint256"
+        }
+      ],
+      "name": "ICOStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "endAt",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "lowCapWei",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "hardCapWei",
+          "type": "uint256"
+        }
+      ],
+      "name": "ICOResumed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "ICOSuspended",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "ICOTerminated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "ICONotCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "collectedWei",
+          "type": "uint256"
+        }
+      ],
+      "name": "ICOCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "investedWei",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "tokens",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "bonusPct",
+          "type": "uint8"
+        }
+      ],
+      "name": "ICOInvestment",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.18;\n\nimport '../flavours/Ownable.sol';\nimport './BaseICOToken.sol';\n\n/**\n * @dev Base abstract smart contract for any OTCrit ICO\n */\ncontract BaseICO is Ownable {\n\n  /// @dev ICO state\n  enum State {\n    // ICO is not active and not started\n    Inactive,\n    // ICO is active, tokens can be distributed among investors.\n    // ICO parameters (end date, hard/low caps) cannot be changed.\n    Active,\n    // ICO is suspended, tokens cannot be distributed among investors.\n    // ICO can be resumed to `Active state`.\n    // ICO parameters (end date, hard/low caps) may changed.\n    Suspended,\n    // ICO is termnated by owner, ICO cannot be resumed.\n    Terminated,\n    // ICO goals are not reached,\n    // ICO terminated and cannot be resumed.\n    NotCompleted,\n    // ICO completed, ICO goals reached successfully,\n    // ICO terminated and cannot be resumed.\n    Completed\n  }\n\n  /// @dev Token which controlled by this ICO\n  BaseICOToken public token;\n\n  /// @dev Current ICO state.\n  State public state;\n\n  /// @dev ICO start date seconds since epoch.\n  uint public startAt;\n\n  /// @dev ICO end date seconds since epoch.\n  uint public endAt;\n\n  /// @dev Minimal amount of investments in wei needed for successfull ICO\n  uint public lowCapWei;\n\n  /// @dev Maximal amount of investments in wei for this ICO.\n  /// If reached ICO will be in `Completed` state.\n  uint public hardCapWei;\n\n  /// @dev Number of investments collected by this ICO\n  uint public collectedWei;\n\n  // ICO state transition events\n  event ICOStarted(uint indexed endAt, uint lowCapWei, uint hardCapWei);\n  event ICOResumed(uint indexed endAt, uint lowCapWei, uint hardCapWei);\n  event ICOSuspended();\n  event ICOTerminated();\n  event ICONotCompleted();\n  event ICOCompleted(uint collectedWei);\n  event ICOInvestment(address indexed from, uint investedWei, uint tokens, uint8 bonusPct);\n\n  modifier isSuspended() {\n    require(state == State.Suspended);\n    _;\n  }\n\n  modifier isActive() {\n    require(state == State.Active);\n    _;\n  }\n\n  /**\n   * @dev Trigger start of ICO.\n   * @param endAt_ ICO end date, seconds since epoch.\n   */\n  function start(uint endAt_) onlyOwner public {\n    require(endAt_ > block.timestamp && state == State.Inactive);\n    endAt = endAt_;\n    startAt = block.timestamp;\n    state = State.Active;\n    ICOStarted(endAt, lowCapWei, hardCapWei);\n  }\n\n  /**\n   * @dev Suspend this ICO.\n   * ICO can be activated later by calling `resume()` function.\n   * In suspend state, ICO owner can change basic ICO paraneter using `tune()` function,\n   * tokens cannot be distributed among investors.\n   */\n  function suspend() onlyOwner isActive public {\n    state = State.Suspended;\n    ICOSuspended();\n  }\n\n  /**\n   * @dev Terminate the ICO.\n   * ICO goals are not reached, ICO terminated and cannot be resumed.\n   */\n  function terminate() onlyOwner public {\n    require(state != State.Terminated &&\n            state != State.NotCompleted &&\n            state != State.Completed);\n    state = State.Terminated;\n    ICOTerminated();\n  }\n\n  /**\n   * @dev Change basic ICO paraneters. Can be done only during `Suspended` state.\n   * Any provided parameter is used only if it is not zero.\n   * @param endAt_ ICO end date seconds since epoch. Used if it is not zero.\n   * @param lowCapWei_ ICO low capacity. Used if it is not zero.\n   * @param hardCapWei_ ICO hard capacity. Used if it is not zero.\n   */\n  function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_) onlyOwner isSuspended public {\n    if (endAt_ > block.timestamp) {\n      endAt = endAt_;\n    }\n    if (lowCapWei_ > 0) {\n      lowCapWei = lowCapWei_;\n    }\n    if (hardCapWei_ > 0) {\n      hardCapWei = hardCapWei_;\n    }\n    touch();\n  }\n\n  /**\n   * @dev Resume a previously suspended ICO.\n   */\n  function resume() onlyOwner isSuspended public {\n    state = State.Active;\n    ICOResumed(endAt, lowCapWei, hardCapWei);\n    touch();\n  }\n\n  /**\n   * @dev Recalculate ICO state based on current block time.\n   * Should be called periodically by ICO owner.\n   */\n  function touch() public;\n\n  /**\n   * Perform investment in this ICO.\n   * @param from_ Investor address.\n   * @param wei_ Amount of invested weis\n   * @return Amount of actually invested weis including bonuses.\n   */\n  function onInvestment(address from_, uint wei_) public;\n}",
+  "sourcePath": "/home/adam/Projects/fl/otcrit-token-service/otcrit-contracts/eth/contracts/base/BaseICO.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/adam/Projects/fl/otcrit-token-service/otcrit-contracts/eth/contracts/base/BaseICO.sol",
+      "exportedSymbols": {
+        "BaseICO": [
+          1000
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 752,
+        "name": "PragmaDirective",
+        "src": "0:24:4"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1351,
+          "absolutePath": "/home/adam/Projects/fl/otcrit-token-service/otcrit-contracts/eth/contracts/flavours/Ownable.sol",
+          "file": "../flavours/Ownable.sol",
+          "scope": 1001,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 753,
+        "name": "ImportDirective",
+        "src": "26:33:4"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1137,
+          "absolutePath": "/home/adam/Projects/fl/otcrit-token-service/otcrit-contracts/eth/contracts/base/BaseICOToken.sol",
+          "file": "./BaseICOToken.sol",
+          "scope": 1001,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 754,
+        "name": "ImportDirective",
+        "src": "60:28:4"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            1350
+          ],
+          "contractKind": "contract",
+          "documentation": "@dev Base abstract smart contract for any OTCrit ICO",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            1000,
+            1350
+          ],
+          "name": "BaseICO",
+          "scope": 1001
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Ownable",
+                  "referencedDeclaration": 1350,
+                  "type": "contract Ownable"
+                },
+                "id": 755,
+                "name": "UserDefinedTypeName",
+                "src": "174:7:4"
+              }
+            ],
+            "id": 756,
+            "name": "InheritanceSpecifier",
+            "src": "174:7:4"
+          },
+          {
+            "attributes": {
+              "canonicalName": "BaseICO.State",
+              "name": "State"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "Inactive"
+                },
+                "id": 757,
+                "name": "EnumValue",
+                "src": "266:8:4"
+              },
+              {
+                "attributes": {
+                  "name": "Active"
+                },
+                "id": 758,
+                "name": "EnumValue",
+                "src": "412:6:4"
+              },
+              {
+                "attributes": {
+                  "name": "Suspended"
+                },
+                "id": 759,
+                "name": "EnumValue",
+                "src": "601:9:4"
+              },
+              {
+                "attributes": {
+                  "name": "Terminated"
+                },
+                "id": 760,
+                "name": "EnumValue",
+                "src": "673:10:4"
+              },
+              {
+                "attributes": {
+                  "name": "NotCompleted"
+                },
+                "id": 761,
+                "name": "EnumValue",
+                "src": "768:12:4"
+              },
+              {
+                "attributes": {
+                  "name": "Completed"
+                },
+                "id": 762,
+                "name": "EnumValue",
+                "src": "885:9:4"
+              }
+            ],
+            "id": 763,
+            "name": "EnumDefinition",
+            "src": "208:690:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "token",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract BaseICOToken",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BaseICOToken",
+                  "referencedDeclaration": 1136,
+                  "type": "contract BaseICOToken"
+                },
+                "id": 764,
+                "name": "UserDefinedTypeName",
+                "src": "948:12:4"
+              }
+            ],
+            "id": 765,
+            "name": "VariableDeclaration",
+            "src": "948:25:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "state",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "enum BaseICO.State",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "State",
+                  "referencedDeclaration": 763,
+                  "type": "enum BaseICO.State"
+                },
+                "id": 766,
+                "name": "UserDefinedTypeName",
+                "src": "1008:5:4"
+              }
+            ],
+            "id": 767,
+            "name": "VariableDeclaration",
+            "src": "1008:18:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "startAt",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 768,
+                "name": "ElementaryTypeName",
+                "src": "1078:4:4"
+              }
+            ],
+            "id": 769,
+            "name": "VariableDeclaration",
+            "src": "1078:19:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "endAt",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 770,
+                "name": "ElementaryTypeName",
+                "src": "1147:4:4"
+              }
+            ],
+            "id": 771,
+            "name": "VariableDeclaration",
+            "src": "1147:17:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "lowCapWei",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 772,
+                "name": "ElementaryTypeName",
+                "src": "1244:4:4"
+              }
+            ],
+            "id": 773,
+            "name": "VariableDeclaration",
+            "src": "1244:21:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "hardCapWei",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 774,
+                "name": "ElementaryTypeName",
+                "src": "1383:4:4"
+              }
+            ],
+            "id": 775,
+            "name": "VariableDeclaration",
+            "src": "1383:22:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "collectedWei",
+              "scope": 1000,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 776,
+                "name": "ElementaryTypeName",
+                "src": "1465:4:4"
+              }
+            ],
+            "id": 777,
+            "name": "VariableDeclaration",
+            "src": "1465:24:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOStarted"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "endAt",
+                      "scope": 785,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 778,
+                        "name": "ElementaryTypeName",
+                        "src": "1544:4:4"
+                      }
+                    ],
+                    "id": 779,
+                    "name": "VariableDeclaration",
+                    "src": "1544:18:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "lowCapWei",
+                      "scope": 785,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 780,
+                        "name": "ElementaryTypeName",
+                        "src": "1564:4:4"
+                      }
+                    ],
+                    "id": 781,
+                    "name": "VariableDeclaration",
+                    "src": "1564:14:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "hardCapWei",
+                      "scope": 785,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 782,
+                        "name": "ElementaryTypeName",
+                        "src": "1580:4:4"
+                      }
+                    ],
+                    "id": 783,
+                    "name": "VariableDeclaration",
+                    "src": "1580:15:4"
+                  }
+                ],
+                "id": 784,
+                "name": "ParameterList",
+                "src": "1543:53:4"
+              }
+            ],
+            "id": 785,
+            "name": "EventDefinition",
+            "src": "1527:70:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOResumed"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "endAt",
+                      "scope": 793,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 786,
+                        "name": "ElementaryTypeName",
+                        "src": "1617:4:4"
+                      }
+                    ],
+                    "id": 787,
+                    "name": "VariableDeclaration",
+                    "src": "1617:18:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "lowCapWei",
+                      "scope": 793,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 788,
+                        "name": "ElementaryTypeName",
+                        "src": "1637:4:4"
+                      }
+                    ],
+                    "id": 789,
+                    "name": "VariableDeclaration",
+                    "src": "1637:14:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "hardCapWei",
+                      "scope": 793,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 790,
+                        "name": "ElementaryTypeName",
+                        "src": "1653:4:4"
+                      }
+                    ],
+                    "id": 791,
+                    "name": "VariableDeclaration",
+                    "src": "1653:15:4"
+                  }
+                ],
+                "id": 792,
+                "name": "ParameterList",
+                "src": "1616:53:4"
+              }
+            ],
+            "id": 793,
+            "name": "EventDefinition",
+            "src": "1600:70:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOSuspended"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 794,
+                "name": "ParameterList",
+                "src": "1691:2:4"
+              }
+            ],
+            "id": 795,
+            "name": "EventDefinition",
+            "src": "1673:21:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOTerminated"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 796,
+                "name": "ParameterList",
+                "src": "1716:2:4"
+              }
+            ],
+            "id": 797,
+            "name": "EventDefinition",
+            "src": "1697:22:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICONotCompleted"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 798,
+                "name": "ParameterList",
+                "src": "1743:2:4"
+              }
+            ],
+            "id": 799,
+            "name": "EventDefinition",
+            "src": "1722:24:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOCompleted"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "collectedWei",
+                      "scope": 803,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 800,
+                        "name": "ElementaryTypeName",
+                        "src": "1768:4:4"
+                      }
+                    ],
+                    "id": 801,
+                    "name": "VariableDeclaration",
+                    "src": "1768:17:4"
+                  }
+                ],
+                "id": 802,
+                "name": "ParameterList",
+                "src": "1767:19:4"
+              }
+            ],
+            "id": 803,
+            "name": "EventDefinition",
+            "src": "1749:38:4"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ICOInvestment"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "from",
+                      "scope": 813,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 804,
+                        "name": "ElementaryTypeName",
+                        "src": "1810:7:4"
+                      }
+                    ],
+                    "id": 805,
+                    "name": "VariableDeclaration",
+                    "src": "1810:20:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "investedWei",
+                      "scope": 813,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 806,
+                        "name": "ElementaryTypeName",
+                        "src": "1832:4:4"
+                      }
+                    ],
+                    "id": 807,
+                    "name": "VariableDeclaration",
+                    "src": "1832:16:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "tokens",
+                      "scope": 813,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 808,
+                        "name": "ElementaryTypeName",
+                        "src": "1850:4:4"
+                      }
+                    ],
+                    "id": 809,
+                    "name": "VariableDeclaration",
+                    "src": "1850:11:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "bonusPct",
+                      "scope": 813,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint8",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint8",
+                          "type": "uint8"
+                        },
+                        "id": 810,
+                        "name": "ElementaryTypeName",
+                        "src": "1863:5:4"
+                      }
+                    ],
+                    "id": 811,
+                    "name": "VariableDeclaration",
+                    "src": "1863:14:4"
+                  }
+                ],
+                "id": 812,
+                "name": "ParameterList",
+                "src": "1809:69:4"
+              }
+            ],
+            "id": 813,
+            "name": "EventDefinition",
+            "src": "1790:89:4"
+          },
+          {
+            "attributes": {
+              "name": "isSuspended",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 814,
+                "name": "ParameterList",
+                "src": "1903:2:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1365,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 815,
+                            "name": "Identifier",
+                            "src": "1912:7:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_enum$_State_$763",
+                                "typeString": "enum BaseICO.State"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 767,
+                                  "type": "enum BaseICO.State",
+                                  "value": "state"
+                                },
+                                "id": 816,
+                                "name": "Identifier",
+                                "src": "1920:5:4"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "member_name": "Suspended",
+                                  "referencedDeclaration": null,
+                                  "type": "enum BaseICO.State"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 763,
+                                      "type": "type(enum BaseICO.State)",
+                                      "value": "State"
+                                    },
+                                    "id": 817,
+                                    "name": "Identifier",
+                                    "src": "1929:5:4"
+                                  }
+                                ],
+                                "id": 818,
+                                "name": "MemberAccess",
+                                "src": "1929:15:4"
+                              }
+                            ],
+                            "id": 819,
+                            "name": "BinaryOperation",
+                            "src": "1920:24:4"
+                          }
+                        ],
+                        "id": 820,
+                        "name": "FunctionCall",
+                        "src": "1912:33:4"
+                      }
+                    ],
+                    "id": 821,
+                    "name": "ExpressionStatement",
+                    "src": "1912:33:4"
+                  },
+                  {
+                    "id": 822,
+                    "name": "PlaceholderStatement",
+                    "src": "1951:1:4"
+                  }
+                ],
+                "id": 823,
+                "name": "Block",
+                "src": "1906:51:4"
+              }
+            ],
+            "id": 824,
+            "name": "ModifierDefinition",
+            "src": "1883:74:4"
+          },
+          {
+            "attributes": {
+              "name": "isActive",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 825,
+                "name": "ParameterList",
+                "src": "1978:2:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1365,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 826,
+                            "name": "Identifier",
+                            "src": "1987:7:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_enum$_State_$763",
+                                "typeString": "enum BaseICO.State"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 767,
+                                  "type": "enum BaseICO.State",
+                                  "value": "state"
+                                },
+                                "id": 827,
+                                "name": "Identifier",
+                                "src": "1995:5:4"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "member_name": "Active",
+                                  "referencedDeclaration": null,
+                                  "type": "enum BaseICO.State"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 763,
+                                      "type": "type(enum BaseICO.State)",
+                                      "value": "State"
+                                    },
+                                    "id": 828,
+                                    "name": "Identifier",
+                                    "src": "2004:5:4"
+                                  }
+                                ],
+                                "id": 829,
+                                "name": "MemberAccess",
+                                "src": "2004:12:4"
+                              }
+                            ],
+                            "id": 830,
+                            "name": "BinaryOperation",
+                            "src": "1995:21:4"
+                          }
+                        ],
+                        "id": 831,
+                        "name": "FunctionCall",
+                        "src": "1987:30:4"
+                      }
+                    ],
+                    "id": 832,
+                    "name": "ExpressionStatement",
+                    "src": "1987:30:4"
+                  },
+                  {
+                    "id": 833,
+                    "name": "PlaceholderStatement",
+                    "src": "2023:1:4"
+                  }
+                ],
+                "id": 834,
+                "name": "Block",
+                "src": "1981:48:4"
+              }
+            ],
+            "id": 835,
+            "name": "ModifierDefinition",
+            "src": "1961:68:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "start",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "endAt_",
+                      "scope": 875,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 836,
+                        "name": "ElementaryTypeName",
+                        "src": "2146:4:4"
+                      }
+                    ],
+                    "id": 837,
+                    "name": "VariableDeclaration",
+                    "src": "2146:11:4"
+                  }
+                ],
+                "id": 838,
+                "name": "ParameterList",
+                "src": "2145:13:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 841,
+                "name": "ParameterList",
+                "src": "2176:0:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1324,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 839,
+                    "name": "Identifier",
+                    "src": "2159:9:4"
+                  }
+                ],
+                "id": 840,
+                "name": "ModifierInvocation",
+                "src": "2159:9:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1365,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 842,
+                            "name": "Identifier",
+                            "src": "2182:7:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "&&",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": ">",
+                                  "type": "bool"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 837,
+                                      "type": "uint256",
+                                      "value": "endAt_"
+                                    },
+                                    "id": 843,
+                                    "name": "Identifier",
+                                    "src": "2190:6:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "timestamp",
+                                      "referencedDeclaration": null,
+                                      "type": "uint256"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 1354,
+                                          "type": "block",
+                                          "value": "block"
+                                        },
+                                        "id": 844,
+                                        "name": "Identifier",
+                                        "src": "2199:5:4"
+                                      }
+                                    ],
+                                    "id": 845,
+                                    "name": "MemberAccess",
+                                    "src": "2199:15:4"
+                                  }
+                                ],
+                                "id": 846,
+                                "name": "BinaryOperation",
+                                "src": "2190:24:4"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "commonType": {
+                                    "typeIdentifier": "t_enum$_State_$763",
+                                    "typeString": "enum BaseICO.State"
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "==",
+                                  "type": "bool"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 767,
+                                      "type": "enum BaseICO.State",
+                                      "value": "state"
+                                    },
+                                    "id": 847,
+                                    "name": "Identifier",
+                                    "src": "2218:5:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "lValueRequested": false,
+                                      "member_name": "Inactive",
+                                      "referencedDeclaration": null,
+                                      "type": "enum BaseICO.State"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 763,
+                                          "type": "type(enum BaseICO.State)",
+                                          "value": "State"
+                                        },
+                                        "id": 848,
+                                        "name": "Identifier",
+                                        "src": "2227:5:4"
+                                      }
+                                    ],
+                                    "id": 849,
+                                    "name": "MemberAccess",
+                                    "src": "2227:14:4"
+                                  }
+                                ],
+                                "id": 850,
+                                "name": "BinaryOperation",
+                                "src": "2218:23:4"
+                              }
+                            ],
+                            "id": 851,
+                            "name": "BinaryOperation",
+                            "src": "2190:51:4"
+                          }
+                        ],
+                        "id": 852,
+                        "name": "FunctionCall",
+                        "src": "2182:60:4"
+                      }
+                    ],
+                    "id": 853,
+                    "name": "ExpressionStatement",
+                    "src": "2182:60:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 771,
+                              "type": "uint256",
+                              "value": "endAt"
+                            },
+                            "id": 854,
+                            "name": "Identifier",
+                            "src": "2248:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 837,
+                              "type": "uint256",
+                              "value": "endAt_"
+                            },
+                            "id": 855,
+                            "name": "Identifier",
+                            "src": "2256:6:4"
+                          }
+                        ],
+                        "id": 856,
+                        "name": "Assignment",
+                        "src": "2248:14:4"
+                      }
+                    ],
+                    "id": 857,
+                    "name": "ExpressionStatement",
+                    "src": "2248:14:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 769,
+                              "type": "uint256",
+                              "value": "startAt"
+                            },
+                            "id": 858,
+                            "name": "Identifier",
+                            "src": "2268:7:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "timestamp",
+                              "referencedDeclaration": null,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1354,
+                                  "type": "block",
+                                  "value": "block"
+                                },
+                                "id": 859,
+                                "name": "Identifier",
+                                "src": "2278:5:4"
+                              }
+                            ],
+                            "id": 860,
+                            "name": "MemberAccess",
+                            "src": "2278:15:4"
+                          }
+                        ],
+                        "id": 861,
+                        "name": "Assignment",
+                        "src": "2268:25:4"
+                      }
+                    ],
+                    "id": 862,
+                    "name": "ExpressionStatement",
+                    "src": "2268:25:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "enum BaseICO.State"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 767,
+                              "type": "enum BaseICO.State",
+                              "value": "state"
+                            },
+                            "id": 863,
+                            "name": "Identifier",
+                            "src": "2299:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "member_name": "Active",
+                              "referencedDeclaration": null,
+                              "type": "enum BaseICO.State"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 763,
+                                  "type": "type(enum BaseICO.State)",
+                                  "value": "State"
+                                },
+                                "id": 864,
+                                "name": "Identifier",
+                                "src": "2307:5:4"
+                              }
+                            ],
+                            "id": 865,
+                            "name": "MemberAccess",
+                            "src": "2307:12:4"
+                          }
+                        ],
+                        "id": 866,
+                        "name": "Assignment",
+                        "src": "2299:20:4"
+                      }
+                    ],
+                    "id": 867,
+                    "name": "ExpressionStatement",
+                    "src": "2299:20:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 785,
+                              "type": "function (uint256,uint256,uint256)",
+                              "value": "ICOStarted"
+                            },
+                            "id": 868,
+                            "name": "Identifier",
+                            "src": "2325:10:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 771,
+                              "type": "uint256",
+                              "value": "endAt"
+                            },
+                            "id": 869,
+                            "name": "Identifier",
+                            "src": "2336:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 773,
+                              "type": "uint256",
+                              "value": "lowCapWei"
+                            },
+                            "id": 870,
+                            "name": "Identifier",
+                            "src": "2343:9:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 775,
+                              "type": "uint256",
+                              "value": "hardCapWei"
+                            },
+                            "id": 871,
+                            "name": "Identifier",
+                            "src": "2354:10:4"
+                          }
+                        ],
+                        "id": 872,
+                        "name": "FunctionCall",
+                        "src": "2325:40:4"
+                      }
+                    ],
+                    "id": 873,
+                    "name": "ExpressionStatement",
+                    "src": "2325:40:4"
+                  }
+                ],
+                "id": 874,
+                "name": "Block",
+                "src": "2176:194:4"
+              }
+            ],
+            "id": 875,
+            "name": "FunctionDefinition",
+            "src": "2131:239:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "suspend",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 876,
+                "name": "ParameterList",
+                "src": "2634:2:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 881,
+                "name": "ParameterList",
+                "src": "2663:0:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1324,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 877,
+                    "name": "Identifier",
+                    "src": "2637:9:4"
+                  }
+                ],
+                "id": 878,
+                "name": "ModifierInvocation",
+                "src": "2637:9:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 835,
+                      "type": "modifier ()",
+                      "value": "isActive"
+                    },
+                    "id": 879,
+                    "name": "Identifier",
+                    "src": "2647:8:4"
+                  }
+                ],
+                "id": 880,
+                "name": "ModifierInvocation",
+                "src": "2647:8:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "enum BaseICO.State"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 767,
+                              "type": "enum BaseICO.State",
+                              "value": "state"
+                            },
+                            "id": 882,
+                            "name": "Identifier",
+                            "src": "2669:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "member_name": "Suspended",
+                              "referencedDeclaration": null,
+                              "type": "enum BaseICO.State"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 763,
+                                  "type": "type(enum BaseICO.State)",
+                                  "value": "State"
+                                },
+                                "id": 883,
+                                "name": "Identifier",
+                                "src": "2677:5:4"
+                              }
+                            ],
+                            "id": 884,
+                            "name": "MemberAccess",
+                            "src": "2677:15:4"
+                          }
+                        ],
+                        "id": 885,
+                        "name": "Assignment",
+                        "src": "2669:23:4"
+                      }
+                    ],
+                    "id": 886,
+                    "name": "ExpressionStatement",
+                    "src": "2669:23:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 795,
+                              "type": "function ()",
+                              "value": "ICOSuspended"
+                            },
+                            "id": 887,
+                            "name": "Identifier",
+                            "src": "2698:12:4"
+                          }
+                        ],
+                        "id": 888,
+                        "name": "FunctionCall",
+                        "src": "2698:14:4"
+                      }
+                    ],
+                    "id": 889,
+                    "name": "ExpressionStatement",
+                    "src": "2698:14:4"
+                  }
+                ],
+                "id": 890,
+                "name": "Block",
+                "src": "2663:54:4"
+              }
+            ],
+            "id": 891,
+            "name": "FunctionDefinition",
+            "src": "2618:99:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "terminate",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 892,
+                "name": "ParameterList",
+                "src": "2850:2:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 895,
+                "name": "ParameterList",
+                "src": "2870:0:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1324,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 893,
+                    "name": "Identifier",
+                    "src": "2853:9:4"
+                  }
+                ],
+                "id": 894,
+                "name": "ModifierInvocation",
+                "src": "2853:9:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1365,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 896,
+                            "name": "Identifier",
+                            "src": "2876:7:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "&&",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "commonType": {
+                                    "typeIdentifier": "t_bool",
+                                    "typeString": "bool"
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "&&",
+                                  "type": "bool"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "commonType": {
+                                        "typeIdentifier": "t_enum$_State_$763",
+                                        "typeString": "enum BaseICO.State"
+                                      },
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "operator": "!=",
+                                      "type": "bool"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 767,
+                                          "type": "enum BaseICO.State",
+                                          "value": "state"
+                                        },
+                                        "id": 897,
+                                        "name": "Identifier",
+                                        "src": "2884:5:4"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": true,
+                                          "lValueRequested": false,
+                                          "member_name": "Terminated",
+                                          "referencedDeclaration": null,
+                                          "type": "enum BaseICO.State"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 763,
+                                              "type": "type(enum BaseICO.State)",
+                                              "value": "State"
+                                            },
+                                            "id": 898,
+                                            "name": "Identifier",
+                                            "src": "2893:5:4"
+                                          }
+                                        ],
+                                        "id": 899,
+                                        "name": "MemberAccess",
+                                        "src": "2893:16:4"
+                                      }
+                                    ],
+                                    "id": 900,
+                                    "name": "BinaryOperation",
+                                    "src": "2884:25:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "commonType": {
+                                        "typeIdentifier": "t_enum$_State_$763",
+                                        "typeString": "enum BaseICO.State"
+                                      },
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "operator": "!=",
+                                      "type": "bool"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 767,
+                                          "type": "enum BaseICO.State",
+                                          "value": "state"
+                                        },
+                                        "id": 901,
+                                        "name": "Identifier",
+                                        "src": "2925:5:4"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": true,
+                                          "lValueRequested": false,
+                                          "member_name": "NotCompleted",
+                                          "referencedDeclaration": null,
+                                          "type": "enum BaseICO.State"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 763,
+                                              "type": "type(enum BaseICO.State)",
+                                              "value": "State"
+                                            },
+                                            "id": 902,
+                                            "name": "Identifier",
+                                            "src": "2934:5:4"
+                                          }
+                                        ],
+                                        "id": 903,
+                                        "name": "MemberAccess",
+                                        "src": "2934:18:4"
+                                      }
+                                    ],
+                                    "id": 904,
+                                    "name": "BinaryOperation",
+                                    "src": "2925:27:4"
+                                  }
+                                ],
+                                "id": 905,
+                                "name": "BinaryOperation",
+                                "src": "2884:68:4"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "commonType": {
+                                    "typeIdentifier": "t_enum$_State_$763",
+                                    "typeString": "enum BaseICO.State"
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "!=",
+                                  "type": "bool"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 767,
+                                      "type": "enum BaseICO.State",
+                                      "value": "state"
+                                    },
+                                    "id": 906,
+                                    "name": "Identifier",
+                                    "src": "2968:5:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "lValueRequested": false,
+                                      "member_name": "Completed",
+                                      "referencedDeclaration": null,
+                                      "type": "enum BaseICO.State"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 763,
+                                          "type": "type(enum BaseICO.State)",
+                                          "value": "State"
+                                        },
+                                        "id": 907,
+                                        "name": "Identifier",
+                                        "src": "2977:5:4"
+                                      }
+                                    ],
+                                    "id": 908,
+                                    "name": "MemberAccess",
+                                    "src": "2977:15:4"
+                                  }
+                                ],
+                                "id": 909,
+                                "name": "BinaryOperation",
+                                "src": "2968:24:4"
+                              }
+                            ],
+                            "id": 910,
+                            "name": "BinaryOperation",
+                            "src": "2884:108:4"
+                          }
+                        ],
+                        "id": 911,
+                        "name": "FunctionCall",
+                        "src": "2876:117:4"
+                      }
+                    ],
+                    "id": 912,
+                    "name": "ExpressionStatement",
+                    "src": "2876:117:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "enum BaseICO.State"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 767,
+                              "type": "enum BaseICO.State",
+                              "value": "state"
+                            },
+                            "id": 913,
+                            "name": "Identifier",
+                            "src": "2999:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "member_name": "Terminated",
+                              "referencedDeclaration": null,
+                              "type": "enum BaseICO.State"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 763,
+                                  "type": "type(enum BaseICO.State)",
+                                  "value": "State"
+                                },
+                                "id": 914,
+                                "name": "Identifier",
+                                "src": "3007:5:4"
+                              }
+                            ],
+                            "id": 915,
+                            "name": "MemberAccess",
+                            "src": "3007:16:4"
+                          }
+                        ],
+                        "id": 916,
+                        "name": "Assignment",
+                        "src": "2999:24:4"
+                      }
+                    ],
+                    "id": 917,
+                    "name": "ExpressionStatement",
+                    "src": "2999:24:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 797,
+                              "type": "function ()",
+                              "value": "ICOTerminated"
+                            },
+                            "id": 918,
+                            "name": "Identifier",
+                            "src": "3029:13:4"
+                          }
+                        ],
+                        "id": 919,
+                        "name": "FunctionCall",
+                        "src": "3029:15:4"
+                      }
+                    ],
+                    "id": 920,
+                    "name": "ExpressionStatement",
+                    "src": "3029:15:4"
+                  }
+                ],
+                "id": 921,
+                "name": "Block",
+                "src": "2870:179:4"
+              }
+            ],
+            "id": 922,
+            "name": "FunctionDefinition",
+            "src": "2832:217:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "tune",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "endAt_",
+                      "scope": 967,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 923,
+                        "name": "ElementaryTypeName",
+                        "src": "3430:4:4"
+                      }
+                    ],
+                    "id": 924,
+                    "name": "VariableDeclaration",
+                    "src": "3430:11:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "lowCapWei_",
+                      "scope": 967,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 925,
+                        "name": "ElementaryTypeName",
+                        "src": "3443:4:4"
+                      }
+                    ],
+                    "id": 926,
+                    "name": "VariableDeclaration",
+                    "src": "3443:15:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "hardCapWei_",
+                      "scope": 967,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 927,
+                        "name": "ElementaryTypeName",
+                        "src": "3460:4:4"
+                      }
+                    ],
+                    "id": 928,
+                    "name": "VariableDeclaration",
+                    "src": "3460:16:4"
+                  }
+                ],
+                "id": 929,
+                "name": "ParameterList",
+                "src": "3429:48:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 934,
+                "name": "ParameterList",
+                "src": "3507:0:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1324,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 930,
+                    "name": "Identifier",
+                    "src": "3478:9:4"
+                  }
+                ],
+                "id": 931,
+                "name": "ModifierInvocation",
+                "src": "3478:9:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 824,
+                      "type": "modifier ()",
+                      "value": "isSuspended"
+                    },
+                    "id": 932,
+                    "name": "Identifier",
+                    "src": "3488:11:4"
+                  }
+                ],
+                "id": 933,
+                "name": "ModifierInvocation",
+                "src": "3488:11:4"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 924,
+                              "type": "uint256",
+                              "value": "endAt_"
+                            },
+                            "id": 935,
+                            "name": "Identifier",
+                            "src": "3517:6:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "timestamp",
+                              "referencedDeclaration": null,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1354,
+                                  "type": "block",
+                                  "value": "block"
+                                },
+                                "id": 936,
+                                "name": "Identifier",
+                                "src": "3526:5:4"
+                              }
+                            ],
+                            "id": 937,
+                            "name": "MemberAccess",
+                            "src": "3526:15:4"
+                          }
+                        ],
+                        "id": 938,
+                        "name": "BinaryOperation",
+                        "src": "3517:24:4"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "=",
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 771,
+                                      "type": "uint256",
+                                      "value": "endAt"
+                                    },
+                                    "id": 939,
+                                    "name": "Identifier",
+                                    "src": "3551:5:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 924,
+                                      "type": "uint256",
+                                      "value": "endAt_"
+                                    },
+                                    "id": 940,
+                                    "name": "Identifier",
+                                    "src": "3559:6:4"
+                                  }
+                                ],
+                                "id": 941,
+                                "name": "Assignment",
+                                "src": "3551:14:4"
+                              }
+                            ],
+                            "id": 942,
+                            "name": "ExpressionStatement",
+                            "src": "3551:14:4"
+                          }
+                        ],
+                        "id": 943,
+                        "name": "Block",
+                        "src": "3543:29:4"
+                      }
+                    ],
+                    "id": 944,
+                    "name": "IfStatement",
+                    "src": "3513:59:4"
+                  },
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 926,
+                              "type": "uint256",
+                              "value": "lowCapWei_"
+                            },
+                            "id": 945,
+                            "name": "Identifier",
+                            "src": "3581:10:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 946,
+                            "name": "Literal",
+                            "src": "3594:1:4"
+                          }
+                        ],
+                        "id": 947,
+                        "name": "BinaryOperation",
+                        "src": "3581:14:4"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "=",
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 773,
+                                      "type": "uint256",
+                                      "value": "lowCapWei"
+                                    },
+                                    "id": 948,
+                                    "name": "Identifier",
+                                    "src": "3605:9:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 926,
+                                      "type": "uint256",
+                                      "value": "lowCapWei_"
+                                    },
+                                    "id": 949,
+                                    "name": "Identifier",
+                                    "src": "3617:10:4"
+                                  }
+                                ],
+                                "id": 950,
+                                "name": "Assignment",
+                                "src": "3605:22:4"
+                              }
+                            ],
+                            "id": 951,
+                            "name": "ExpressionStatement",
+                            "src": "3605:22:4"
+                          }
+                        ],
+                        "id": 952,
+                        "name": "Block",
+                        "src": "3597:37:4"
+                      }
+                    ],
+                    "id": 953,
+                    "name": "IfStatement",
+                    "src": "3577:57:4"
+                  },
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 928,
+                              "type": "uint256",
+                              "value": "hardCapWei_"
+                            },
+                            "id": 954,
+                            "name": "Identifier",
+                            "src": "3643:11:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 955,
+                            "name": "Literal",
+                            "src": "3657:1:4"
+                          }
+                        ],
+                        "id": 956,
+                        "name": "BinaryOperation",
+                        "src": "3643:15:4"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "=",
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 775,
+                                      "type": "uint256",
+                                      "value": "hardCapWei"
+                                    },
+                                    "id": 957,
+                                    "name": "Identifier",
+                                    "src": "3668:10:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 928,
+                                      "type": "uint256",
+                                      "value": "hardCapWei_"
+                                    },
+                                    "id": 958,
+                                    "name": "Identifier",
+                                    "src": "3681:11:4"
+                                  }
+                                ],
+                                "id": 959,
+                                "name": "Assignment",
+                                "src": "3668:24:4"
+                              }
+                            ],
+                            "id": 960,
+                            "name": "ExpressionStatement",
+                            "src": "3668:24:4"
+                          }
+                        ],
+                        "id": 961,
+                        "name": "Block",
+                        "src": "3660:39:4"
+                      }
+                    ],
+                    "id": 962,
+                    "name": "IfStatement",
+                    "src": "3639:60:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 992,
+                              "type": "function ()",
+                              "value": "touch"
+                            },
+                            "id": 963,
+                            "name": "Identifier",
+                            "src": "3704:5:4"
+                          }
+                        ],
+                        "id": 964,
+                        "name": "FunctionCall",
+                        "src": "3704:7:4"
+                      }
+                    ],
+                    "id": 965,
+                    "name": "ExpressionStatement",
+                    "src": "3704:7:4"
+                  }
+                ],
+                "id": 966,
+                "name": "Block",
+                "src": "3507:209:4"
+              }
+            ],
+            "id": 967,
+            "name": "FunctionDefinition",
+            "src": "3416:300:4"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "resume",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 968,
+                "name": "ParameterList",
+                "src": "3792:2:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 973,
+                "name": "ParameterList",
+                "src": "3824:0:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1324,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 969,
+                    "name": "Identifier",
+                    "src": "3795:9:4"
+                  }
+                ],
+                "id": 970,
+                "name": "ModifierInvocation",
+                "src": "3795:9:4"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 824,
+                      "type": "modifier ()",
+                      "value": "isSuspended"
+                    },
+                    "id": 971,
+                    "name": "Identifier",
+                    "src": "3805:11:4"
+                  }
+                ],
+                "id": 972,
+                "name": "ModifierInvocation",
+                "src": "3805:11:4"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "enum BaseICO.State"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 767,
+                              "type": "enum BaseICO.State",
+                              "value": "state"
+                            },
+                            "id": 974,
+                            "name": "Identifier",
+                            "src": "3830:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "member_name": "Active",
+                              "referencedDeclaration": null,
+                              "type": "enum BaseICO.State"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 763,
+                                  "type": "type(enum BaseICO.State)",
+                                  "value": "State"
+                                },
+                                "id": 975,
+                                "name": "Identifier",
+                                "src": "3838:5:4"
+                              }
+                            ],
+                            "id": 976,
+                            "name": "MemberAccess",
+                            "src": "3838:12:4"
+                          }
+                        ],
+                        "id": 977,
+                        "name": "Assignment",
+                        "src": "3830:20:4"
+                      }
+                    ],
+                    "id": 978,
+                    "name": "ExpressionStatement",
+                    "src": "3830:20:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 793,
+                              "type": "function (uint256,uint256,uint256)",
+                              "value": "ICOResumed"
+                            },
+                            "id": 979,
+                            "name": "Identifier",
+                            "src": "3856:10:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 771,
+                              "type": "uint256",
+                              "value": "endAt"
+                            },
+                            "id": 980,
+                            "name": "Identifier",
+                            "src": "3867:5:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 773,
+                              "type": "uint256",
+                              "value": "lowCapWei"
+                            },
+                            "id": 981,
+                            "name": "Identifier",
+                            "src": "3874:9:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 775,
+                              "type": "uint256",
+                              "value": "hardCapWei"
+                            },
+                            "id": 982,
+                            "name": "Identifier",
+                            "src": "3885:10:4"
+                          }
+                        ],
+                        "id": 983,
+                        "name": "FunctionCall",
+                        "src": "3856:40:4"
+                      }
+                    ],
+                    "id": 984,
+                    "name": "ExpressionStatement",
+                    "src": "3856:40:4"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 992,
+                              "type": "function ()",
+                              "value": "touch"
+                            },
+                            "id": 985,
+                            "name": "Identifier",
+                            "src": "3902:5:4"
+                          }
+                        ],
+                        "id": 986,
+                        "name": "FunctionCall",
+                        "src": "3902:7:4"
+                      }
+                    ],
+                    "id": 987,
+                    "name": "ExpressionStatement",
+                    "src": "3902:7:4"
+                  }
+                ],
+                "id": 988,
+                "name": "Block",
+                "src": "3824:90:4"
+              }
+            ],
+            "id": 989,
+            "name": "FunctionDefinition",
+            "src": "3777:137:4"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "touch",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 990,
+                "name": "ParameterList",
+                "src": "4054:2:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 991,
+                "name": "ParameterList",
+                "src": "4063:0:4"
+              }
+            ],
+            "id": 992,
+            "name": "FunctionDefinition",
+            "src": "4040:24:4"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "onInvestment",
+              "payable": false,
+              "scope": 1000,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "from_",
+                      "scope": 999,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 993,
+                        "name": "ElementaryTypeName",
+                        "src": "4281:7:4"
+                      }
+                    ],
+                    "id": 994,
+                    "name": "VariableDeclaration",
+                    "src": "4281:13:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "wei_",
+                      "scope": 999,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 995,
+                        "name": "ElementaryTypeName",
+                        "src": "4296:4:4"
+                      }
+                    ],
+                    "id": 996,
+                    "name": "VariableDeclaration",
+                    "src": "4296:9:4"
+                  }
+                ],
+                "id": 997,
+                "name": "ParameterList",
+                "src": "4280:26:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 998,
+                "name": "ParameterList",
+                "src": "4313:0:4"
+              }
+            ],
+            "id": 999,
+            "name": "FunctionDefinition",
+            "src": "4259:55:4"
+          }
+        ],
+        "id": 1000,
+        "name": "ContractDefinition",
+        "src": "154:4162:4"
+      }
+    ],
+    "id": 1001,
+    "name": "SourceUnit",
+    "src": "0:4316:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-01-22T05:42:38.131Z"
+}
