@@ -66,33 +66,9 @@ interface ILocable extends IOwnable {
   unlock(tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }
 
-/**
- * Not mintable, ERC20 compilant token, distributed by ICO/Pre-ICO.
- */
-interface ICOToken extends IContractInstance, ILocable {
-
+interface IBaseFixedERC20Token extends IContractInstance, ILocable {
   // ERC20 Total supply
   totalSupply: ISimpleCallable<NumberLike>;
-
-  // Available supply of tokens
-  availableSupply: ISimpleCallable<NumberLike>;
-
-  // ICO/Pre-ICO smart contract allowed to distribute public funds for this OTCToken
-  ico: ISimpleCallable<address>;
-
-  /**
-   * Set address of ICO smart-contract which controls token
-   * initial token distribution.
-   * @param ico ICO contract address.
-   */
-  changeICO(ico: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
-
-  /**
-   * Assign `amount` of tokens to investor identified by `to` address.
-   * @param to Investor address.
-   * @param amount Number of tokens distributed.
-   */
-  icoInvestment(to: address, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
   /**
    * Gets the balance of the specified address.
@@ -101,7 +77,7 @@ interface ICOToken extends IContractInstance, ILocable {
    */
   balanceOf: {
     call(owner: address, tr?: Web3.TransactionRequest): Promise<NumberLike>;
-  }
+  };
 
   /**
    * Transfer token for a specified address
@@ -109,33 +85,6 @@ interface ICOToken extends IContractInstance, ILocable {
    * @param value The amount to be transferred.
    */
   transfer(to: address, value: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
-}
-
-/**
- * ERC20 OTC Token https://otcrit.org
- */
-interface IOTCToken extends ICOToken {
-  // Token name
-  name: ISimpleCallable<string>;
-
-  // Token symbol
-  symbol: ISimpleCallable<string>;
-
-  // Token decimals
-  decimals: ISimpleCallable<NumberLike>;
-
-  getReservedTokens: {
-    call(side: TokenReservation, tr?: Web3.TransactionRequest): Promise<NumberLike>;
-  };
-
-  /**
-   * Assign `amount` of privately distributed tokens
-   *      to someone identified with `to` address.
-   * @param to   Tokens owner
-   * @param side Group identifier of privately distributed tokens
-   * @param amount Number of tokens distributed
-   */
-  reserve(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
   /**
    * @dev Transfer tokens from one address to another
@@ -173,11 +122,66 @@ interface IOTCToken extends ICOToken {
 }
 
 /**
+ * Not mintable, ERC20 compilant token, distributed by ICO/Pre-ICO.
+ */
+interface IBaseICOToken extends IBaseFixedERC20Token {
+  // Available supply of tokens
+  availableSupply: ISimpleCallable<NumberLike>;
+
+  // ICO/Pre-ICO smart contract allowed to distribute public funds for this OTCToken
+  ico: ISimpleCallable<address>;
+
+  /**
+   * Set address of ICO smart-contract which controls token
+   * initial token distribution.
+   * @param ico ICO contract address.
+   */
+  changeICO(ico: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+
+  /**
+   * Assign `amount` of tokens to investor identified by `to` address.
+   * @param to Investor address.
+   * @param amount Number of tokens distributed.
+   */
+  icoInvestment(to: address, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+}
+
+/**
+ * ERC20 OTC Token https://otcrit.org
+ */
+interface IOTCToken extends IBaseICOToken {
+  // Token name
+  name: ISimpleCallable<string>;
+
+  // Token symbol
+  symbol: ISimpleCallable<string>;
+
+  // Token decimals
+  decimals: ISimpleCallable<NumberLike>;
+
+  getReservedTokens: {
+    call(side: TokenReservation, tr?: Web3.TransactionRequest): Promise<NumberLike>;
+  };
+
+  /**
+   * Assign `amount` of privately distributed tokens
+   *      to someone identified with `to` address.
+   * @param to   Tokens owner
+   * @param side Group identifier of privately distributed tokens
+   * @param amount Number of tokens distributed
+   */
+  reserve(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+}
+
+/**
  * @dev Base abstract smart contract for any OTCrit ICO
  */
 interface IBaseICO extends IContractInstance, IOwnable {
   // ICO controlled token
   token: ISimpleCallable<address>;
+
+  // Team wallet
+  teamWallet: ISimpleCallable<address>;
 
   // Current ICO state.
   state: ISimpleCallable<number>;
@@ -195,8 +199,33 @@ interface IBaseICO extends IContractInstance, IOwnable {
   // If reached ICO will be in `Completed` state.
   hardCapWei: ISimpleCallable<NumberLike>;
 
+  // Minimal amount of investments in wei per investor.
+  lowCapTxWei: ISimpleCallable<NumberLike>;
+
+  // Maximal amount of investments in wei per investor.
+  hardCapTxWei: ISimpleCallable<NumberLike>;
+
   // Number of investments collected by this ICO
   collectedWei: ISimpleCallable<NumberLike>;
+
+  /**
+   * Add address to ICO whitelist
+   * @param addr Investor address
+   */
+  whitelist(addr: address): Promise<ITXResult>;
+
+  /**
+   * Remove address from ICO whitelist
+   * @param addr Investor address
+   */
+  blacklist(addr: address): Promise<ITXResult>;
+
+  whitelisted: {
+    /**
+     * Returns true if given address in ICO whitelist
+     */
+    call(addr: address, tr?: Web3.TransactionRequest): Promise<boolean>;
+  }
 
   /**
    * Trigger start of ICO.
@@ -224,11 +253,15 @@ interface IBaseICO extends IContractInstance, IOwnable {
    * @param endAt ICO end date seconds since epoch. Used if it is not zero.
    * @param lowCapWei ICO low capacity. Used if it is not zero.
    * @param hardCapWei ICO hard capacity. Used if it is not zero.
+   * @param lowCapTxWei Min limit for ICO per transaction
+   * @param hardCapTxWei Hard limit for ICO per transaction
    */
   tune(
     endAt: NumberLike,
     lowCapWei: NumberLike,
     hardCapWei: NumberLike,
+    lowCapTxWei: NumberLike,
+    hardCapTxWei: NumberLike,
     tr?: Web3.TransactionRequest
   ): Promise<ITXResult>;
 
@@ -244,11 +277,9 @@ interface IBaseICO extends IContractInstance, IOwnable {
   touch(tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
   /**
-   * Perform investment in this ICO.
-   * @param from Investor address.
-   * @param wei Amount of invested weis
+   * Buy tokens. (payable)
    */
-  onInvestment(from: address, wei: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  buyTokens(from: address, tr?: Web3.TransactionRequest): Promise<ITXResult>
 }
 
 /**
@@ -257,7 +288,4 @@ interface IBaseICO extends IContractInstance, IOwnable {
 interface IOTCPreICO extends IBaseICO {
   // @dev 1e18 WEI == 1ETH == 5000 tokens
   WEI_TOKEN_EXCHANGE_RATIO: ISimpleCallable<NumberLike>;
-
-  // Current bonus as percents depending on stage of ICO
-  bonusPct: ISimpleCallable<NumberLike>;
 }

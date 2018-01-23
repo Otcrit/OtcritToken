@@ -17,6 +17,9 @@ contract OTCToken is BaseICOToken {
 
   uint internal constant ONE_TOKEN = 1e18;
 
+  /// @dev Fired some tokens distributed to someone from team,bounty,parthners,others
+  event ReservedICOTokensDistributed(address indexed to, uint8 side, uint amount);
+
   /**
    * @dev Constructor
    * @param totalSupplyTokens_ Total amount of tokens supplied
@@ -85,7 +88,4 @@ contract OTCToken is BaseICOToken {
     balances[to_] = balances[to_].add(amount_);
     ReservedICOTokensDistributed(to_, side_, amount_);
   }
-
-  /// @dev Fired some tokens distributed to someone from team,bounty,parthners,others
-  event ReservedICOTokensDistributed(address indexed to, uint8 side, uint amount);
 }

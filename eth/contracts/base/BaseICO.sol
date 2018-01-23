@@ -48,17 +48,31 @@ contract BaseICO is Ownable {
   /// If reached ICO will be in `Completed` state.
   uint public hardCapWei;
 
+  /// @dev Minimal amount of investments in wei per investor.
+  uint public lowCapTxWei;
+
+  /// @dev Maximal amount of investments in wei per investor.
+  uint public hardCapTxWei;
+
   /// @dev Number of investments collected by this ICO
   uint public collectedWei;
 
+  /// @dev Team wallet used to collect funds
+  address public teamWallet;
+
+  /// @dev ICO whitelist
+  mapping (address => bool) public whitelist;
+
   // ICO state transition events
-  event ICOStarted(uint indexed endAt, uint lowCapWei, uint hardCapWei);
-  event ICOResumed(uint indexed endAt, uint lowCapWei, uint hardCapWei);
+  event ICOStarted(uint indexed endAt, uint lowCapWei, uint hardCapWei, uint lowCapTxWei, uint hardCapTxWei);
+  event ICOResumed(uint indexed endAt, uint lowCapWei, uint hardCapWei, uint lowCapTxWei, uint hardCapTxWei);
   event ICOSuspended();
   event ICOTerminated();
   event ICONotCompleted();
   event ICOCompleted(uint collectedWei);
   event ICOInvestment(address indexed from, uint investedWei, uint tokens, uint8 bonusPct);
+  event ICOWhitelisted(address indexed addr);
+  event ICOBlacklisted(address indexed addr);
 
   modifier isSuspended() {
     require(state == State.Suspended);
@@ -71,6 +85,31 @@ contract BaseICO is Ownable {
   }
 
   /**
+   * Add address to ICO whitelist
+   * @param address_ Investor address
+   */
+  function whitelist(address address_) external onlyOwner {
+    whitelist[address_] = true;
+    ICOWhitelisted(address_);
+  }
+
+  /**
+   * Remove address from ICO whitelist
+   * @param address_ Investor address
+   */
+  function blacklist(address address_) external onlyOwner {
+    delete whitelist[address_];
+    ICOBlacklisted(address_);
+  }
+
+  /**
+   * Returns true if given address in ICO whitelist
+   */
+  function whitelisted(address address_) public view returns (bool) {
+    return whitelist[address_];
+  }
+
+  /**
    * @dev Trigger start of ICO.
    * @param endAt_ ICO end date, seconds since epoch.
    */
@@ -79,7 +118,7 @@ contract BaseICO is Ownable {
     endAt = endAt_;
     startAt = block.timestamp;
     state = State.Active;
-    ICOStarted(endAt, lowCapWei, hardCapWei);
+    ICOStarted(endAt, lowCapWei, hardCapWei, lowCapTxWei, hardCapTxWei);
   }
 
   /**
@@ -111,8 +150,14 @@ contract BaseICO is Ownable {
    * @param endAt_ ICO end date seconds since epoch. Used if it is not zero.
    * @param lowCapWei_ ICO low capacity. Used if it is not zero.
    * @param hardCapWei_ ICO hard capacity. Used if it is not zero.
+   * @param lowCapTxWei_ Min limit for ICO per transaction
+   * @param hardCapTxWei_ Hard limit for ICO per transaction
    */
-  function tune(uint endAt_, uint lowCapWei_, uint hardCapWei_) onlyOwner isSuspended public {
+  function tune(uint endAt_,
+                uint lowCapWei_,
+                uint hardCapWei_,
+                uint lowCapTxWei_,
+                uint hardCapTxWei_) onlyOwner isSuspended public {
     if (endAt_ > block.timestamp) {
       endAt = endAt_;
     }
@@ -122,6 +167,13 @@ contract BaseICO is Ownable {
     if (hardCapWei_ > 0) {
       hardCapWei = hardCapWei_;
     }
+    if (lowCapTxWei_ > 0) {
+      lowCapTxWei = lowCapTxWei_;
+    }
+    if (hardCapTxWei_ > 0) {
+      hardCapTxWei = hardCapTxWei_;
+    }
+    require(lowCapWei <= hardCapWei && lowCapTxWei <= hardCapTxWei);
     touch();
   }
 
@@ -130,8 +182,15 @@ contract BaseICO is Ownable {
    */
   function resume() onlyOwner isSuspended public {
     state = State.Active;
-    ICOResumed(endAt, lowCapWei, hardCapWei);
+    ICOResumed(endAt, lowCapWei, hardCapWei, lowCapTxWei, hardCapTxWei);
     touch();
+  }
+
+  /**
+   * @dev Send ether to the fund collection wallet
+   */
+  function forwardFunds() internal {
+    teamWallet.transfer(msg.value);
   }
 
   /**
@@ -141,10 +200,7 @@ contract BaseICO is Ownable {
   function touch() public;
 
   /**
-   * Perform investment in this ICO.
-   * @param from_ Investor address.
-   * @param wei_ Amount of invested weis
-   * @return Amount of actually invested weis including bonuses.
+   * @dev Buy tokens
    */
-  function onInvestment(address from_, uint wei_) public;
+  function buyTokens() public payable;
 }

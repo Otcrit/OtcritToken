@@ -15,30 +15,30 @@ contract OTCPreICO is BaseICO {
   /// @dev 1e18 WEI == 1ETH == 5000 tokens
   uint public constant ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
-  /// @dev 15% bonus at start of Pre-ICO
-  uint8 public bonusPct = 15;
 
-  event ICOStarted(address icoToken, uint lowCapWei, uint hardCapWei);
-
-  function OTCPreICO(address icoToken_, uint lowCapWei_, uint hardCapWei_) public {
-    require(icoToken_ != address(0));
+  function OTCPreICO(address icoToken_,
+                     address teamWallet_,
+                     uint lowCapWei_,
+                     uint hardCapWei_,
+                     uint lowCapTxWei_,
+                     uint hardCapTxWei_) public {
+    require(icoToken_ != address(0) && teamWallet_ != address(0));
     token = BaseICOToken(icoToken_);
+    teamWallet = teamWallet_;
     state = State.Inactive;
     lowCapWei = lowCapWei_;
     hardCapWei = hardCapWei_;
-    ICOStarted(icoToken_, lowCapWei_, hardCapWei_);
+    lowCapTxWei = lowCapTxWei_;
+    hardCapTxWei = hardCapTxWei_;
   }
 
   /**
    * @dev Recalculate ICO state based on current block time.
    * Should be called periodically by ICO owner.
    */
-  function touch() onlyOwner public {
+  function touch() public {
     if (state != State.Active && state != State.Suspended) {
       return;
-    }
-    if (bonusPct != 10 && (block.timestamp - startAt >= 1 weeks)) {
-      bonusPct = 10; // Decrease bonus to 10%
     }
     if (collectedWei >= hardCapWei) {
       state = State.Completed;
@@ -55,29 +55,28 @@ contract OTCPreICO is BaseICO {
     }
   }
 
-  /**
-   * Perform investment in this ICO.
-   * @param from_ Investor address.
-   * @param wei_ Amount of invested weis
-   */
-  function onInvestment(address from_, uint wei_) onlyOwner public {
-    require(wei_ != 0 && from_ != address(0) && token != address(0));
+  function buyTokens() public payable {
+    require(state == State.Active &&
+            block.timestamp <= endAt &&
+            msg.value >= lowCapTxWei &&
+            msg.value <= hardCapTxWei &&
+            collectedWei + msg.value <= hardCapWei &&
+            whitelisted(msg.sender));
+    uint amountWei = msg.value;
+    uint8 bonus = (block.timestamp - startAt >= 1 weeks) ? 10 : 15;
+    uint iwei = bonus > 0 ? amountWei.mul(100 + bonus).div(100) : amountWei;
+    uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
+    token.icoInvestment(msg.sender, itokens); // Transfer tokens to investor
+    collectedWei = collectedWei.add(amountWei);
+    ICOInvestment(msg.sender, amountWei, itokens, bonus);
+    forwardFunds();
     touch();
-    if (state == State.Active) {
-      // todo rounding errors?
-      uint iwei = bonusPct > 0 ? wei_.mul(100 + bonusPct).div(100) : wei_;
-      uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
-      token.icoInvestment(from_, itokens); // Transfer tokens to investor
-      collectedWei = collectedWei.add(wei_);
-      ICOInvestment(from_, iwei, itokens, bonusPct);
-      touch();
-    }
   }
 
   /**
    * Disable direct payments
    */
   function() external payable {
-    revert();
+    buyTokens();
   }
 }
