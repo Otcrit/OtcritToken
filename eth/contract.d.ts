@@ -208,17 +208,31 @@ interface IBaseICO extends IContractInstance, IOwnable {
   // Number of investments collected by this ICO
   collectedWei: ISimpleCallable<NumberLike>;
 
+  // True if whitelist enabled
+  whitelistEnabled: ISimpleCallable<boolean>;
+
   /**
    * Add address to ICO whitelist
    * @param addr Investor address
    */
-  whitelist(addr: address): Promise<ITXResult>;
+  whitelist(addr: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
   /**
    * Remove address from ICO whitelist
    * @param addr Investor address
    */
-  blacklist(addr: address): Promise<ITXResult>;
+  blacklist(addr: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+
+  /**
+   * Enable whitelisting
+   */
+  enableWhitelist(tr?: Web3.TransactionRequest): Promise<ITXResult>;
+
+  /**
+   * Disable whitelisting
+   */
+  disableWhitelist(tr?: Web3.TransactionRequest): Promise<ITXResult>;
+
 
   whitelisted: {
     /**

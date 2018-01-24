@@ -81,7 +81,7 @@ contract OTCToken is BaseICOToken {
    *      to someone identified with `to_` address.
    * @param to_   Tokens owner
    * @param side_ Group identifier of privately distributed tokens
-   * @param amount_ Number of tokens distributed
+   * @param amount_ Number of tokens distributed with decimals part
    */
   function assignReserved(address to_, uint8 side_, uint amount_) onlyOwner public {
     require(to_ != address(0) && (side_ & 0xf) != 0);
