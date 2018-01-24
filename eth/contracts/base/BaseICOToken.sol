@@ -11,7 +11,7 @@ contract BaseICOToken is BaseFixedERC20Token {
   /// @dev Available supply of tokens
   uint public availableSupply;
 
-  /// @dev ICO/Pre-ICO smart contract allowed to distribute public funds for this OTCToken
+  /// @dev ICO/Pre-ICO smart contract allowed to distribute public funds for this
   address public ico;
 
   /// @dev Fired if investment for `amount` of tokens performed by `to` address
@@ -30,10 +30,6 @@ contract BaseICOToken is BaseFixedERC20Token {
     availableSupply = totalSupply_;
   }
 
-  function isValidICOInvestment(address to_, uint amount_) internal view returns(bool) {
-    return msg.sender == ico && to_ != address(0) && amount_ <= availableSupply;
-  }
-
   /**
    * @dev Set address of ICO smart-contract which controls token
    * initial token distribution.
@@ -45,6 +41,10 @@ contract BaseICOToken is BaseFixedERC20Token {
     ICOChanged(ico);
   }
 
+  function isValidICOInvestment(address to_, uint amount_) internal view returns(bool) {
+    return msg.sender == ico && to_ != address(0) && amount_ <= availableSupply;
+  }
+
   /**
    * @dev Assign `amount_` of tokens to investor identified by `to_` address.
    * @param to_ Investor address.
@@ -52,9 +52,6 @@ contract BaseICOToken is BaseFixedERC20Token {
    */
   function icoInvestment(address to_, uint amount_) public returns (uint) {
     require(isValidICOInvestment(to_, amount_));
-    if (amount_ > availableSupply) {
-      amount_ = availableSupply;
-    }
     availableSupply -= amount_;
     balances[to_] = balances[to_].add(amount_);
     ICOTokensInvested(to_, amount_);

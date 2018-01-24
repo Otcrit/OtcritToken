@@ -17,6 +17,7 @@ contract OTCToken is BaseICOToken {
 
   uint internal constant ONE_TOKEN = 1e18;
 
+
   /// @dev Fired some tokens distributed to someone from team,bounty,parthners,others
   event ReservedICOTokensDistributed(address indexed to, uint8 side, uint amount);
 
@@ -34,10 +35,12 @@ contract OTCToken is BaseICOToken {
                     uint reservedBountyTokens_,
                     uint reservedOtherTokens_)
     BaseICOToken(totalSupplyTokens_ * ONE_TOKEN) public {
-    require(reservedTeamTokens_
-            .add(reservedBountyTokens_)
-            .add(reservedPartnersTokens_)
-            .add(reservedOtherTokens_) <= totalSupplyTokens_);
+    require(availableSupply == totalSupply);
+    availableSupply = availableSupply
+                        .sub(reservedTeamTokens_ * ONE_TOKEN)
+                        .sub(reservedBountyTokens_ * ONE_TOKEN)
+                        .sub(reservedPartnersTokens_ * ONE_TOKEN)
+                        .sub(reservedOtherTokens_ * ONE_TOKEN);
     reserved[RESERVED_TEAM_SIDE] = reservedTeamTokens_ * ONE_TOKEN;
     reserved[RESERVED_BOUNTY_SIDE] = reservedBountyTokens_ * ONE_TOKEN;
     reserved[RESERVED_PARTNERS_SIDE] = reservedPartnersTokens_ * ONE_TOKEN;
@@ -82,7 +85,6 @@ contract OTCToken is BaseICOToken {
    */
   function reserve(address to_, uint8 side_, uint amount_) onlyOwner public {
     require(to_ != address(0) && (side_ & 0xf) != 0);
-    availableSupply = availableSupply.sub(amount_);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);

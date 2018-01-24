@@ -55,9 +55,7 @@ contract('OTCRIT', function(accounts: string[]) {
   it('should be correct initial token state', async () => {
     const token = await OTCToken.deployed();
     // Total supply
-    assert.equal(await token.totalSupply.call(), tokens(100e6));
-    // Available supply
-    assert.equal(await token.availableSupply.call(), tokens(100e6));
+    assert.equal(await token.totalSupply.call(), tokens(100e6).toString());
     // Team
     assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
     // Partners
@@ -66,6 +64,18 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6));
     // Other
     assert.equal(await token.getReservedTokens.call(TokenReservation.Others), tokens(5e6));
+
+    // Available supply
+    assert.equal(
+      await token.availableSupply.call(),
+      new BigNumber(tokens(100e6))
+        .sub(tokens(10e6))
+        .sub(tokens(5e6))
+        .sub(tokens(10e6))
+        .sub(tokens(5e6))
+        .toString()
+    );
+
     // Token locked
     assert.equal(await token.locked.call(), true);
     // Token owner
@@ -118,7 +128,6 @@ contract('OTCRIT', function(accounts: string[]) {
   it('should allow private token distribution', async () => {
     const token = await OTCToken.deployed();
     // Check initial state
-    assert.equal(await token.availableSupply.call(), tokens(100e6));
     assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6));
 
@@ -131,7 +140,6 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(txres.logs[0].args.to, actors.team1);
     assert.equal(txres.logs[0].args.amount, tokens(1e6));
 
-    assert.equal(await token.availableSupply.call(), tokens(100e6 - 1e6));
     assert.equal(await token.balanceOf.call(actors.team1), tokens(1e6));
     assert.equal(await token.balanceOf.call(actors.someone1), 0);
     // check reserved tokens for team
@@ -143,7 +151,6 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(txres.logs[0].args.to, actors.bounty1);
     assert.equal(txres.logs[0].args.amount.toString(), tokens(2e6));
 
-    assert.equal(await token.availableSupply.call(), tokens(100e6 - 1e6 - 2e6));
     assert.equal(await token.balanceOf.call(actors.team1), tokens(1e6));
     assert.equal(await token.balanceOf.call(actors.bounty1), tokens(2e6));
     // check reserved tokens for bounty
@@ -273,16 +280,15 @@ contract('OTCRIT', function(accounts: string[]) {
         from: actors.investor1
       })
     );
-    assert.equal((await ico.state.call()), ICOState.Active);
+    assert.equal(await ico.state.call(), ICOState.Active);
     txres = await ico.touch({ from: actors.owner });
     assert.equal(txres.logs[0].event, 'ICOCompleted');
-    assert.equal((await ico.state.call()), ICOState.Completed);
+    assert.equal(await ico.state.call(), ICOState.Completed);
   });
 
   it('Should team wallet match invested funds after pre-ico', async () => {
     assert.equal(state.teamWalletInitialBalance.toString(), state.sentWei.toString());
   });
-
 });
 
 export = {};

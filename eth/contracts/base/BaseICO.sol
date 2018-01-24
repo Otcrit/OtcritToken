@@ -60,6 +60,9 @@ contract BaseICO is Ownable {
   /// @dev Team wallet used to collect funds
   address public teamWallet;
 
+  /// @dev True if whitelist enabled
+  bool public whitelistEnabled;
+
   /// @dev ICO whitelist
   mapping (address => bool) public whitelist;
 
@@ -103,10 +106,28 @@ contract BaseICO is Ownable {
   }
 
   /**
-   * Returns true if given address in ICO whitelist
+   * @dev Returns true if given address in ICO whitelist
    */
   function whitelisted(address address_) public view returns (bool) {
-    return whitelist[address_];
+    if (whitelistEnabled) {
+      return whitelist[address_];
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @dev Enable whitelisting
+   */
+  function enableWhitelist() public {
+    whitelistEnabled = true;
+  }
+
+  /**
+   * @dev Disable whitelisting
+   */
+  function disableWhitelist() public {
+    whitelistEnabled = false;
   }
 
   /**
