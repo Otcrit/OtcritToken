@@ -61,7 +61,7 @@ contract OTCPreICO is BaseICO {
             msg.value >= lowCapTxWei &&
             msg.value <= hardCapTxWei &&
             collectedWei + msg.value <= hardCapWei &&
-            whitelisted(msg.sender));
+            whitelisted(msg.sender) );
     uint amountWei = msg.value;
     uint8 bonus = (block.timestamp - startAt >= 1 weeks) ? 10 : 15;
     uint iwei = bonus > 0 ? amountWei.mul(100 + bonus).div(100) : amountWei;
@@ -74,7 +74,7 @@ contract OTCPreICO is BaseICO {
   }
 
   /**
-   * Disable direct payments
+   * Accept direct payments
    */
   function() external payable {
     buyTokens();

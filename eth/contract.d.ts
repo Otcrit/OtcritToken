@@ -170,7 +170,7 @@ interface IOTCToken extends IBaseICOToken {
    * @param side Group identifier of privately distributed tokens
    * @param amount Number of tokens distributed
    */
-  reserve(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  assignReserved(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }
 
 /**

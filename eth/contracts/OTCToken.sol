@@ -9,17 +9,17 @@ import './base/BaseICOToken.sol';
 contract OTCToken is BaseICOToken {
   using SafeMath for uint;
 
-  string public name = 'Otcrit token';
+  string public constant name = 'Otcrit token';
 
-  string public symbol = 'OTC';
+  string public constant symbol = 'OTC';
 
-  uint8 public decimals = 18;
+  uint8 public constant decimals = 18;
 
   uint internal constant ONE_TOKEN = 1e18;
 
 
   /// @dev Fired some tokens distributed to someone from team,bounty,parthners,others
-  event ReservedICOTokensDistributed(address indexed to, uint8 side, uint amount);
+  event ReservedTokensDistributed(address indexed to, uint8 side, uint amount);
 
   /**
    * @dev Constructor
@@ -83,11 +83,11 @@ contract OTCToken is BaseICOToken {
    * @param side_ Group identifier of privately distributed tokens
    * @param amount_ Number of tokens distributed
    */
-  function reserve(address to_, uint8 side_, uint amount_) onlyOwner public {
+  function assignReserved(address to_, uint8 side_, uint amount_) onlyOwner public {
     require(to_ != address(0) && (side_ & 0xf) != 0);
     // SafeMath will check reserved[side_] >= amount
     reserved[side_] = reserved[side_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);
-    ReservedICOTokensDistributed(to_, side_, amount_);
+    ReservedTokensDistributed(to_, side_, amount_);
   }
 }

@@ -132,11 +132,13 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6));
 
     // Do not allow token reservation from others
-    await assertEvmThrows(token.reserve(actors.team1, TokenReservation.Team, tokens(1e6), { from: actors.someone1 }));
+    await assertEvmThrows(
+      token.assignReserved(actors.team1, TokenReservation.Team, tokens(1e6), { from: actors.someone1 })
+    );
 
     // // Reserve tokens for team member
-    let txres = await token.reserve(actors.team1, TokenReservation.Team, tokens(1e6), { from: actors.owner });
-    assert.equal(txres.logs[0].event, 'ReservedICOTokensDistributed');
+    let txres = await token.assignReserved(actors.team1, TokenReservation.Team, tokens(1e6), { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ReservedTokensDistributed');
     assert.equal(txres.logs[0].args.to, actors.team1);
     assert.equal(txres.logs[0].args.amount, tokens(1e6));
 
@@ -146,8 +148,8 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6 - 1e6));
 
     // Reserve tokens for bounty member
-    txres = await token.reserve(actors.bounty1, TokenReservation.Bounty, tokens(2e6), { from: actors.owner });
-    assert.equal(txres.logs[0].event, 'ReservedICOTokensDistributed');
+    txres = await token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(2e6), { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ReservedTokensDistributed');
     assert.equal(txres.logs[0].args.to, actors.bounty1);
     assert.equal(txres.logs[0].args.amount.toString(), tokens(2e6));
 
@@ -157,7 +159,7 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6 - 2e6));
     // Do not allow reserve more than allowed tokens
     await assertEvmInvalidOpcode(
-      token.reserve(actors.bounty1, TokenReservation.Bounty, tokens(10e6 - 2e6 + 1), { from: actors.owner })
+      token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(10e6 - 2e6 + 1), { from: actors.owner })
     );
   });
 
@@ -287,7 +289,10 @@ contract('OTCRIT', function(accounts: string[]) {
   });
 
   it('Should team wallet match invested funds after pre-ico', async () => {
-    assert.equal(state.teamWalletInitialBalance.toString(), state.sentWei.toString());
+    assert.equal(
+      new BigNumber(web3.eth.getBalance(actors.teamWallet)).sub(state.teamWalletInitialBalance).toString(),
+      state.sentWei.toString()
+    );
   });
 });
 

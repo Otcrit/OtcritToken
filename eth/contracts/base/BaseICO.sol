@@ -61,7 +61,7 @@ contract BaseICO is Ownable {
   address public teamWallet;
 
   /// @dev True if whitelist enabled
-  bool public whitelistEnabled;
+  bool public whitelistEnabled = true;
 
   /// @dev ICO whitelist
   mapping (address => bool) public whitelist;
@@ -112,7 +112,7 @@ contract BaseICO is Ownable {
     if (whitelistEnabled) {
       return whitelist[address_];
     } else {
-      return false;
+      return true;
     }
   }
 
