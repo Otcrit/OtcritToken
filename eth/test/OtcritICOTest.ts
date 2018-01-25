@@ -6,7 +6,11 @@ import { assertEvmInvalidOpcode, assertEvmThrows } from './lib/assert';
 import { web3LatestTime, Seconds, web3IncreaseTime } from './lib/time';
 import { NumberLike } from 'bignumber.js';
 import { watchFile } from 'mz/fs';
-import { ItTestFn } from 'eth/globals';
+import { ItTestFn } from '../globals';
+
+const it = (<any> global).it as ItTestFn;
+const assert = (<any> global).assert as Chai.AssertStatic;
+
 const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 

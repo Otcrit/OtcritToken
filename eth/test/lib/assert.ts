@@ -1,4 +1,5 @@
 import { ParsedLog } from 'web3/parsed';
+const assert = (<any> global).assert as Chai.AssertStatic;
 
 export async function assertEvmThrows(promise: PromiseLike<any>) {
   try {
