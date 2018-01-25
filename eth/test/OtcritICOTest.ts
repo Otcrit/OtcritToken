@@ -11,11 +11,11 @@ const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 
 const ONE_TOKEN = new BigNumber('1e18');
-const ETH_TOKEN_EXCHANGE_RATIO = 5000;
+const ETH_TOKEN_EXCHANGE_RATIO = 5;
 
-declare global {
-  const it: ItTestFn;
-}
+// we need this to avoid clashing whith other global registered @types/ in other modules
+const it = (<any>global).it as ItTestFn;
+const assert = (<any>global).assert as Chai.AssertStatic;
 
 function tokens(val: NumberLike): string {
   return new BigNumber(val).times(ONE_TOKEN).toString();
