@@ -13,6 +13,8 @@ declare global {
   const artifacts: Artifacts;
 }
 
+declare type TokenGroup = 'team' | 'bounty' | 'partners' | 'others';
+
 declare const enum TokenReservation {
   // Tokens for team members
   Team = 0x1,
@@ -170,7 +172,12 @@ interface IOTCToken extends IBaseICOToken {
    * @param side Group identifier of privately distributed tokens
    * @param amount Number of tokens distributed
    */
-  assignReserved(to: address, side: TokenReservation, amount: NumberLike, tr?: Web3.TransactionRequest): Promise<ITXResult>;
+  assignReserved(
+    to: address,
+    side: TokenReservation,
+    amount: NumberLike,
+    tr?: Web3.TransactionRequest
+  ): Promise<ITXResult>;
 }
 
 /**
@@ -233,13 +240,12 @@ interface IBaseICO extends IContractInstance, IOwnable {
    */
   disableWhitelist(tr?: Web3.TransactionRequest): Promise<ITXResult>;
 
-
   whitelisted: {
     /**
      * Returns true if given address in ICO whitelist
      */
     call(addr: address, tr?: Web3.TransactionRequest): Promise<boolean>;
-  }
+  };
 
   /**
    * Trigger start of ICO.
@@ -293,7 +299,7 @@ interface IBaseICO extends IContractInstance, IOwnable {
   /**
    * Buy tokens. (payable)
    */
-  buyTokens(from: address, tr?: Web3.TransactionRequest): Promise<ITXResult>
+  buyTokens(from: address, tr?: Web3.TransactionRequest): Promise<ITXResult>;
 }
 
 /**

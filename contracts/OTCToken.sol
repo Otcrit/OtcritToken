@@ -19,7 +19,7 @@ contract OTCToken is BaseICOToken {
 
 
   /// @dev Fired some tokens distributed to someone from team,bounty,parthners,others
-  event ReservedTokensDistributed(address indexed to, uint8 side, uint amount);
+  event ReservedTokensDistributed(address indexed to, uint8 group, uint amount);
 
   /**
    * @dev Constructor
@@ -72,22 +72,22 @@ contract OTCToken is BaseICOToken {
   /**
    * @dev Get recerved tokens for specific side
    */
-  function getReservedTokens(uint8 side_) view public returns (uint) {
-    return reserved[side_];
+  function getReservedTokens(uint8 group_) view public returns (uint) {
+    return reserved[group_];
   }
 
   /**
    * @dev Assign `amount_` of privately distributed tokens
    *      to someone identified with `to_` address.
    * @param to_   Tokens owner
-   * @param side_ Group identifier of privately distributed tokens
+   * @param group_ Group identifier of privately distributed tokens
    * @param amount_ Number of tokens distributed with decimals part
    */
-  function assignReserved(address to_, uint8 side_, uint amount_) onlyOwner public {
-    require(to_ != address(0) && (side_ & 0xf) != 0);
-    // SafeMath will check reserved[side_] >= amount
-    reserved[side_] = reserved[side_].sub(amount_);
+  function assignReserved(address to_, uint8 group_, uint amount_) onlyOwner public {
+    require(to_ != address(0) && (group_ & 0xf) != 0);
+    // SafeMath will check reserved[group_] >= amount
+    reserved[group_] = reserved[group_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);
-    ReservedTokensDistributed(to_, side_, amount_);
+    ReservedTokensDistributed(to_, group_, amount_);
   }
 }
