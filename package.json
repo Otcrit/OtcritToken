@@ -7,7 +7,8 @@
   "license": "private",
   "private": true,
   "scripts": {
-    "test": "tsc && node eth/run-tests.js"
+    "test": "tsc && node run-tests.js",
+    "build": "tsc && truffle compile"
   },
   "dependencies": {
     "ajv": "^6.0.0",
