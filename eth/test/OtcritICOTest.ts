@@ -6,11 +6,16 @@ import { assertEvmInvalidOpcode, assertEvmThrows } from './lib/assert';
 import { web3LatestTime, Seconds, web3IncreaseTime } from './lib/time';
 import { NumberLike } from 'bignumber.js';
 import { watchFile } from 'mz/fs';
+import { ItTestFn } from 'eth/globals';
 const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 
 const ONE_TOKEN = new BigNumber('1e18');
 const ETH_TOKEN_EXCHANGE_RATIO = 5000;
+
+declare global {
+  const it: ItTestFn;
+}
 
 function tokens(val: NumberLike): string {
   return new BigNumber(val).times(ONE_TOKEN).toString();

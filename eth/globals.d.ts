@@ -63,7 +63,7 @@ interface IMigrations extends IContractInstance {
 
 // Define global variables (truffle framework)
 declare global {
-  const it: ItTestFn;
+  //const it: ItTestFn;
   const contract: (name: string, test: (accounts: string[]) => any) => void;
   const assert: Chai.AssertStatic;
   const web3: Web3;
