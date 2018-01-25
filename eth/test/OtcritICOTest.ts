@@ -8,14 +8,14 @@ import { NumberLike } from 'bignumber.js';
 import { watchFile } from 'mz/fs';
 import { ItTestFn } from '../globals';
 
-const it = (<any> global).it as ItTestFn;
-const assert = (<any> global).assert as Chai.AssertStatic;
+const it = (<any>global).it as ItTestFn;
+const assert = (<any>global).assert as Chai.AssertStatic;
 
 const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 
 const ONE_TOKEN = new BigNumber('1e18');
-const ETH_TOKEN_EXCHANGE_RATIO = 5;
+const ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
 function tokens(val: NumberLike): string {
   return new BigNumber(val).times(ONE_TOKEN).toString();
@@ -23,7 +23,7 @@ function tokens(val: NumberLike): string {
 
 function tokens2wei(val: NumberLike): string {
   return new BigNumber(val)
-    .times(ONE_TOKEN)
+    .mul(ONE_TOKEN)
     .divToInt(ETH_TOKEN_EXCHANGE_RATIO)
     .toString();
 }
@@ -203,7 +203,7 @@ contract('OTCRIT', function(accounts: string[]) {
       })
     );
 
-    // Add investor1 to white-list
+    // // Add investor1 to white-list
     await ico.whitelist(actors.investor1);
     // Now it can buy tokens
     let txres = await ico.sendTransaction({
