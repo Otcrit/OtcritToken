@@ -181,7 +181,7 @@ interface IOTCToken extends IBaseICOToken {
 }
 
 /**
- * @dev Base abstract smart contract for any OTCrit ICO
+ * @dev Base abstract smart contract for any ICO
  */
 interface IBaseICO extends IContractInstance, IOwnable {
   // ICO controlled token

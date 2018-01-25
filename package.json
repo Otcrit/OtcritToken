@@ -23,8 +23,7 @@
     "request": "^2.83.0",
     "truffle-contract": "^3.0.1",
     "tslib": "^1.8.1",
-    "web3": "0.20.3",
-    "web3-typed": "https://github.com/Softmotions/web3-typed.git"
+    "web3": "0.20.3"
   },
   "devDependencies": {
     "@types/bignumber.js": "4.0.2",
@@ -38,6 +37,7 @@
     "truffle": "^4.0.4",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2",
-    "typescript-logging": "^0.5.0"
+    "typescript-logging": "^0.5.0",
+    "web3-typed": "https://github.com/Softmotions/web3-typed.git"
   }
 }

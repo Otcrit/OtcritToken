@@ -4,7 +4,7 @@ import '../flavours/Ownable.sol';
 import './BaseICOToken.sol';
 
 /**
- * @dev Base abstract smart contract for any OTCrit ICO
+ * @dev Base abstract smart contract for any ICO
  */
 contract BaseICO is Ownable {
 
