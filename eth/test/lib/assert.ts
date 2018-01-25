@@ -1,5 +1,6 @@
 import { ParsedLog } from 'web3/parsed';
-const assert = (<any> global).assert as Chai.AssertStatic;
+// we need this to avoid clashing whith other global registered @types/ in other modules
+const assert = (<any>global).assert as Chai.AssertStatic;
 
 export async function assertEvmThrows(promise: PromiseLike<any>) {
   try {

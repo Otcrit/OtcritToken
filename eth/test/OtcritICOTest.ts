@@ -15,11 +15,7 @@ const OTCToken = artifacts.require('./OTCToken.sol');
 const OTCPreICO = artifacts.require('./OTCPreICO.sol');
 
 const ONE_TOKEN = new BigNumber('1e18');
-const ETH_TOKEN_EXCHANGE_RATIO = 5000;
-
-declare global {
-  const it: ItTestFn;
-}
+const ETH_TOKEN_EXCHANGE_RATIO = 5;
 
 function tokens(val: NumberLike): string {
   return new BigNumber(val).times(ONE_TOKEN).toString();
