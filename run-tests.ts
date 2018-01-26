@@ -21,7 +21,7 @@ function exit(code: number) {
   if (mnemonic != null) {
     args.push('-m', mnemonic);
   }
-  testrpc = spawn(path.join(__dirname, '../node_modules/.bin/ganache-cli'), args, {
+  testrpc = spawn(path.join(__dirname, './node_modules/.bin/ganache-cli'), args, {
     cwd: __dirname
   });
   MergeStream(testrpc.stdout, testrpc.stderr).pipe(fs.createWriteStream('ganache-cli.log'));
