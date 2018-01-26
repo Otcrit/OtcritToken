@@ -87,7 +87,13 @@ Investors are able to returns theirs funds.
 * Low-cap `200` ETH
 * Investor can return his initial funds only if `pre-ico` in `Terminated` or `Not completed` states
 
-## Pre-ICO investment workflow
+
+
+## Pre-ICO investment workflow (outdated at now)
+
+**Current investment workflow: direct transactions to ICO contract using whitelist**
+
+Outdated worflow:
 
 1. Investor must read then accept rules and conditions of pre-ico phase.
 1. Investor must identify himself by registering on `otcrit.org` website using `auth0.com` service
