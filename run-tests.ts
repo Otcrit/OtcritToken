@@ -40,7 +40,7 @@ function exit(code: number) {
 
 // Run Truffle tests
 (function() {
-  const truffle = spawn(path.join(__dirname, '../node_modules/.bin/truffle'), ['test'], {
+  const truffle = spawn(path.join(__dirname, './node_modules/.bin/truffle'), ['test'], {
     cwd: __dirname
   });
   truffle.on('error', err => {
