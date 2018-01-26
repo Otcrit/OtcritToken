@@ -1,12 +1,12 @@
 /build
-!truffle.js
-
 .~*
 /var
 /static
 *.js
 *.js.*
 *.log
+
+!/truffle.js
 
 ### Node template
 # Logs
