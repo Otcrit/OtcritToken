@@ -36,7 +36,6 @@ contract BaseICOToken is BaseFixedERC20Token {
    * @param ico_ ICO contract address.
    */
   function changeICO(address ico_) onlyOwner public {
-    require(ico_ != address(0));
     ico = ico_;
     ICOChanged(ico);
   }
