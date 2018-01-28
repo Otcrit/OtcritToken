@@ -5,7 +5,6 @@ import { IOTCPreICO, ICOState, TokenReservation } from '../contract';
 import { assertEvmInvalidOpcode, assertEvmThrows } from './lib/assert';
 import { web3LatestTime, Seconds, web3IncreaseTime } from './lib/time';
 import { NumberLike } from 'bignumber.js';
-import { watchFile } from 'mz/fs';
 import { ItTestFn } from '../globals';
 
 const it = (<any>global).it as ItTestFn;

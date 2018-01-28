@@ -70,7 +70,7 @@ contract OTCToken is BaseICOToken {
   mapping(uint8 => uint) public reserved;
 
   /**
-   * @dev Get recerved tokens for specific side
+   * @dev Get recerved tokens for specific group
    */
   function getReservedTokens(uint8 group_) view public returns (uint) {
     return reserved[group_];
