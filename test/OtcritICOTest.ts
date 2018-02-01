@@ -63,9 +63,9 @@ contract('OTCRIT', function(accounts: string[]) {
     // Team
     assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
     // Partners
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Partners), tokens(5e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Partners), tokens(7e6));
     // Bounty
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(8e6));
     // Other
     assert.equal(await token.getReservedTokens.call(TokenReservation.Others), tokens(5e6));
 
@@ -74,8 +74,8 @@ contract('OTCRIT', function(accounts: string[]) {
       await token.availableSupply.call(),
       new BigNumber(tokens(100e6))
         .sub(tokens(10e6))
-        .sub(tokens(5e6))
-        .sub(tokens(10e6))
+        .sub(tokens(7e6))
+        .sub(tokens(8e6))
         .sub(tokens(5e6))
         .toString()
     );
@@ -133,7 +133,7 @@ contract('OTCRIT', function(accounts: string[]) {
     const token = await OTCToken.deployed();
     // Check initial state
     assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(8e6));
 
     // Do not allow token reservation from others
     await assertEvmThrows(
@@ -160,10 +160,10 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.balanceOf.call(actors.team1), tokens(1e6));
     assert.equal(await token.balanceOf.call(actors.bounty1), tokens(2e6));
     // check reserved tokens for bounty
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(10e6 - 2e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(8e6 - 2e6));
     // Do not allow reserve more than allowed tokens
     await assertEvmInvalidOpcode(
-      token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(10e6 - 2e6 + 1), { from: actors.owner })
+      token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(8e6 - 2e6 + 1), { from: actors.owner })
     );
   });
 
@@ -290,6 +290,16 @@ contract('OTCRIT', function(accounts: string[]) {
     txres = await ico.touch({ from: actors.owner });
     assert.equal(txres.logs[0].event, 'ICOCompleted');
     assert.equal(await ico.state.call(), ICOState.Completed);
+  });
+
+  it('check whitelist access', async () => {
+    assert.isTrue(preIco != null);
+    const ico = preIco!!;
+
+    await assertEvmThrows(ico.disableWhitelist({from: actors.someone1}));
+    await assertEvmThrows(ico.whitelist(actors.someone1, {from: actors.someone1}));
+    await ico.disableWhitelist({from: actors.owner});
+    await ico.enableWhitelist({from: actors.owner});
   });
 
   it('Should team wallet match invested funds after pre-ico', async () => {

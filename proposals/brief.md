@@ -27,8 +27,8 @@ when main ICO successfully completed and all available tokens (100e6) are distri
 
 * `70e6` Sold to public
 * `10e6` Team members
-* `10e6` Bounty
-* `5e6`  Partners and advisors
+* `8e6`  Bounty
+* `7e6`  Partners and advisors
 * `5e6`  Reserve for over-the-counter and future development
 
 ## Token distribution among privileged holders
