@@ -3,6 +3,9 @@ pragma solidity ^0.4.18;
 import './commons/SafeMath.sol';
 import './base/BaseICO.sol';
 
+// Audit: If this contract is used for the full ICO not only the pre-sale it might make sense to rename it to OTCCrowdsale or something similar
+
+ 
 /**
  * @title OTCrit Pre-ICO smart contract.
  */
@@ -15,7 +18,7 @@ contract OTCPreICO is BaseICO {
   /// @dev 1e18 WEI == 1ETH == 5000 tokens
   uint public constant ETH_TOKEN_EXCHANGE_RATIO = 5000;
 
-
+  // Audit: It might be better for these setters to be in a constructur in the BaseICO
   function OTCPreICO(address icoToken_,
                      address teamWallet_,
                      uint lowCapWei_,
@@ -23,7 +26,7 @@ contract OTCPreICO is BaseICO {
                      uint lowCapTxWei_,
                      uint hardCapTxWei_) public {
     require(icoToken_ != address(0) && teamWallet_ != address(0));
-    token = BaseICOToken(icoToken_);
+    token = BaseICOToken(icoToken_); 
     teamWallet = teamWallet_;
     state = State.Inactive;
     lowCapWei = lowCapWei_;
