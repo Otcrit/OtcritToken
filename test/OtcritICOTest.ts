@@ -212,10 +212,10 @@ contract('OTCRIT', function(accounts: string[]) {
     state.sentWei = state.sentWei.add(tokens2wei(5000));
     assert.equal(txres.logs[0].event, 'ICOInvestment');
     assert.equal(txres.logs[0].args.investedWei, tokens2wei(5000).toString());
-    assert.equal(txres.logs[0].args.bonusPct, 15);
+    assert.equal(txres.logs[0].args.bonusPct, 20);
     assert.equal(
       txres.logs[0].args.tokens,
-      wei2rawtokens(txres.logs[0].args.investedWei.mul(115).divToInt(100)).toString()
+      wei2rawtokens(txres.logs[0].args.investedWei.mul(120).divToInt(100)).toString()
     );
     investor1Tokens = investor1Tokens.add(txres.logs[0].args.tokens);
     assert.equal(await token.balanceOf.call(actors.investor1), txres.logs[0].args.tokens.toString());
@@ -230,10 +230,10 @@ contract('OTCRIT', function(accounts: string[]) {
     state.sentWei = state.sentWei.add(tokens2wei(15000));
     assert.equal(txres.logs[0].event, 'ICOInvestment');
     assert.equal(txres.logs[0].args.investedWei, tokens2wei(15000).toString());
-    assert.equal(txres.logs[0].args.bonusPct, 15);
+    assert.equal(txres.logs[0].args.bonusPct, 20);
     assert.equal(
       txres.logs[0].args.tokens,
-      wei2rawtokens(txres.logs[0].args.investedWei.mul(115).divToInt(100)).toString()
+      wei2rawtokens(txres.logs[0].args.investedWei.mul(120).divToInt(100)).toString()
     );
     assert.equal(await token.balanceOf.call(actors.investor2), txres.logs[0].args.tokens.toString());
 

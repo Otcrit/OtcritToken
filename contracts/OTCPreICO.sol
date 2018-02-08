@@ -63,7 +63,7 @@ contract OTCPreICO is BaseICO {
             collectedWei + msg.value <= hardCapWei &&
             whitelisted(msg.sender) );
     uint amountWei = msg.value;
-    uint8 bonus = (block.timestamp - startAt >= 1 weeks) ? 10 : 15;
+    uint8 bonus = (block.timestamp - startAt >= 1 weeks) ? 10 : 20;
     uint iwei = bonus > 0 ? amountWei.mul(100 + bonus).div(100) : amountWei;
     uint itokens = iwei * ETH_TOKEN_EXCHANGE_RATIO;
     token.icoInvestment(msg.sender, itokens); // Transfer tokens to investor
