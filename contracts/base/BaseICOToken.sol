@@ -25,7 +25,7 @@ contract BaseICOToken is BaseFixedERC20Token {
    * @param totalSupply_ Total tokens supply.
    */
   function BaseICOToken(uint totalSupply_) public {
-    locked = true;
+    locked = true; // Audit: I'd call lock() for better readability
     totalSupply = totalSupply_;
     availableSupply = totalSupply_;
   }
@@ -40,6 +40,8 @@ contract BaseICOToken is BaseFixedERC20Token {
     ICOChanged(ico);
   }
 
+  // Audit: Keep the sender logic separated from the input validation
+  // Audit Create modifier onlyICOAddress -  and use it in the icoInvestment method
   function isValidICOInvestment(address to_, uint amount_) internal view returns(bool) {
     return msg.sender == ico && to_ != address(0) && amount_ <= availableSupply;
   }
@@ -51,7 +53,7 @@ contract BaseICOToken is BaseFixedERC20Token {
    */
   function icoInvestment(address to_, uint amount_) public returns (uint) {
     require(isValidICOInvestment(to_, amount_));
-    availableSupply -= amount_;
+    availableSupply -= amount_; // Audit: Please keep using safe math here too 
     balances[to_] = balances[to_].add(amount_);
     ICOTokensInvested(to_, amount_);
     return amount_;

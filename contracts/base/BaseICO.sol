@@ -42,17 +42,17 @@ contract BaseICO is Ownable {
   uint public endAt;
 
   /// @dev Minimal amount of investments in wei needed for successfull ICO
-  uint public lowCapWei;
+  uint public lowCapWei; // Audit: I'd name this softCapWei
 
   /// @dev Maximal amount of investments in wei for this ICO.
   /// If reached ICO will be in `Completed` state.
   uint public hardCapWei;
 
   /// @dev Minimal amount of investments in wei per investor.
-  uint public lowCapTxWei;
+  uint public lowCapTxWei; // Audit: I'd name this minimalContributionWei
 
   /// @dev Maximal amount of investments in wei per investor.
-  uint public hardCapTxWei;
+  uint public hardCapTxWei; // Audit: I'd name this maximumContributionWei
 
   /// @dev Number of investments collected by this ICO
   uint public collectedWei;
@@ -166,7 +166,7 @@ contract BaseICO is Ownable {
   }
 
   /**
-   * @dev Change basic ICO paraneters. Can be done only during `Suspended` state.
+   * @dev Change basic ICO parameters. Can be done only during `Suspended` state.
    * Any provided parameter is used only if it is not zero.
    * @param endAt_ ICO end date seconds since epoch. Used if it is not zero.
    * @param lowCapWei_ ICO low capacity. Used if it is not zero.
@@ -210,6 +210,11 @@ contract BaseICO is Ownable {
   /**
    * @dev Send ether to the fund collection wallet
    */
+   // Audit: I could not find logic for refund on softCap not reached
+   // Audit: Something like this might make sense for this case:
+   // https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/crowdsale/RefundVault.sol
+   // Here is how it can be used:
+   // https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/crowdsale/RefundableCrowdsale.sol
   function forwardFunds() internal {
     teamWallet.transfer(msg.value);
   }
