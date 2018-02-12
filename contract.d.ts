@@ -13,17 +13,21 @@ declare global {
   const artifacts: Artifacts;
 }
 
-declare type TokenGroup = 'team' | 'bounty' | 'partners' | 'others';
+declare type TokenGroup = 'team' | 'bounty' | 'partners' | 'others' | 'teamlocked' | 'partnerslocked';
 
 declare const enum TokenReservation {
-  // Tokens for team members
+  // Tokens for team members (unlocked)
   Team = 0x1,
   // Tokens for bounty participants
   Bounty = 0x2,
-  //Tokens for OTCRIT partners
+  // Tokens for OTCRIT partners (unlocked)
   Partners = 0x4,
   // Other privately distributed tokens
-  Others = 0x8
+  Others = 0x8,
+  // Tokens for team members (50% locked)
+  TeamLocked = 0x10,
+  // Tokens for OTCRIT partners (50% locked)
+  PartnersLocked = 0x20,
 }
 
 declare const enum ICOState {

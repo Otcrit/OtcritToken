@@ -3,7 +3,7 @@ console.log(`Web3 version: ${web3.version.api}`);
 import * as BigNumber from 'bignumber.js';
 import { IOTCPreICO, ICOState, TokenReservation } from '../contract';
 import { assertEvmInvalidOpcode, assertEvmThrows } from './lib/assert';
-import { web3LatestTime, Seconds, web3IncreaseTime } from './lib/time';
+import {web3LatestTime, Seconds, web3IncreaseTime, web3IncreaseTimeTo} from './lib/time';
 import { NumberLike } from 'bignumber.js';
 import { ItTestFn } from '../globals';
 
@@ -52,6 +52,7 @@ contract('OTCRIT', function(accounts: string[]) {
     investor1: accounts[cnt++],
     investor2: accounts[cnt++],
     investor3: accounts[cnt++],
+    partner1: accounts[cnt++],
     teamWallet: accounts[cnt++]
   } as { [k: string]: string };
   console.log('Actors: ', actors);
@@ -61,9 +62,11 @@ contract('OTCRIT', function(accounts: string[]) {
     // Total supply
     assert.equal(await token.totalSupply.call(), tokens(100e6).toString());
     // Team
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(5e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.TeamLocked), tokens(5e6));
     // Partners
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Partners), tokens(7e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Partners), tokens(3.5e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.PartnersLocked), tokens(3.5e6));
     // Bounty
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(8e6));
     // Other
@@ -132,7 +135,7 @@ contract('OTCRIT', function(accounts: string[]) {
   it('should allow private token distribution', async () => {
     const token = await OTCToken.deployed();
     // Check initial state
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(5e6));
     assert.equal(await token.getReservedTokens.call(TokenReservation.Bounty), tokens(8e6));
 
     // Do not allow token reservation from others
@@ -149,7 +152,7 @@ contract('OTCRIT', function(accounts: string[]) {
     assert.equal(await token.balanceOf.call(actors.team1), tokens(1e6));
     assert.equal(await token.balanceOf.call(actors.someone1), 0);
     // check reserved tokens for team
-    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(10e6 - 1e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.Team), tokens(5e6 - 1e6));
 
     // Reserve tokens for bounty member
     txres = await token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(2e6), { from: actors.owner });
@@ -165,6 +168,49 @@ contract('OTCRIT', function(accounts: string[]) {
     await assertEvmInvalidOpcode(
       token.assignReserved(actors.bounty1, TokenReservation.Bounty, tokens(8e6 - 2e6 + 1), { from: actors.owner })
     );
+  });
+
+  it('locked team & partners token', async () => {
+    const token = await OTCToken.deployed();
+    // Check initial state
+    assert.equal(await token.getReservedTokens.call(TokenReservation.TeamLocked), tokens(5e6));
+    assert.equal(await token.getReservedTokens.call(TokenReservation.PartnersLocked), tokens(3.5e6));
+
+    const startTime = web3LatestTime();
+
+    await assertEvmThrows(
+      token.assignReserved(actors.team1, TokenReservation.TeamLocked, tokens(1e6), { from: actors.owner })
+    );
+    await assertEvmThrows(
+      token.assignReserved(actors.partner1, TokenReservation.PartnersLocked, tokens(1e6), { from: actors.owner })
+    );
+
+    await web3IncreaseTime(Seconds.years(1) + 1);
+    await assertEvmThrows(
+      token.assignReserved(actors.team1, TokenReservation.TeamLocked, tokens(1e6), { from: actors.owner })
+    );
+
+    let txres =
+      await token.assignReserved(actors.partner1, TokenReservation.PartnersLocked, tokens(1e6), { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ReservedTokensDistributed');
+    assert.equal(txres.logs[0].args.to, actors.partner1);
+    assert.equal(txres.logs[0].args.amount, tokens(1e6));
+
+    assert.equal(await token.balanceOf.call(actors.partner1), tokens(1e6));
+    // check reserved tokens for partners (locked)
+    assert.equal(await token.getReservedTokens.call(TokenReservation.PartnersLocked), tokens(3.5e6 - 1e6));
+
+    await web3IncreaseTime(Seconds.years(1));
+    txres = await token.assignReserved(actors.team2, TokenReservation.TeamLocked, tokens(1e6), { from: actors.owner });
+    assert.equal(txres.logs[0].event, 'ReservedTokensDistributed');
+    assert.equal(txres.logs[0].args.to, actors.team2);
+    assert.equal(txres.logs[0].args.amount, tokens(1e6));
+
+    assert.equal(await token.balanceOf.call(actors.team2), tokens(1e6));
+    // check reserved tokens for team (locked)
+    assert.equal(await token.getReservedTokens.call(TokenReservation.TeamLocked), tokens(5e6 - 1e6));
+
+    await web3IncreaseTime(startTime - web3LatestTime());
   });
 
   it('should public token operations be locked during ICO', async () => {

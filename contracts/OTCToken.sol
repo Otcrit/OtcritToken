@@ -41,10 +41,18 @@ contract OTCToken is BaseICOToken {
                         .sub(reservedBountyTokens_ * ONE_TOKEN)
                         .sub(reservedPartnersTokens_ * ONE_TOKEN)
                         .sub(reservedOtherTokens_ * ONE_TOKEN);
-    reserved[RESERVED_TEAM_SIDE] = reservedTeamTokens_ * ONE_TOKEN;
+    reserved[RESERVED_TEAM_SIDE] = reservedTeamTokens_ * ONE_TOKEN / 2;
+    locktime[RESERVED_TEAM_SIDE] = 0;
+    reserved[RESERVED_TEAM_LOCKED_SIDE] = reservedTeamTokens_ * ONE_TOKEN / 2;
+    locktime[RESERVED_TEAM_LOCKED_SIDE] = block.timestamp + 2 years; // lock part for 2 years
     reserved[RESERVED_BOUNTY_SIDE] = reservedBountyTokens_ * ONE_TOKEN;
-    reserved[RESERVED_PARTNERS_SIDE] = reservedPartnersTokens_ * ONE_TOKEN;
+    locktime[RESERVED_BOUNTY_SIDE] = 0;
+    reserved[RESERVED_PARTNERS_SIDE] = reservedPartnersTokens_ * ONE_TOKEN / 2;
+    locktime[RESERVED_PARTNERS_SIDE] = 0;
+    reserved[RESERVED_PARTNERS_LOCKED_SIDE] = reservedPartnersTokens_ * ONE_TOKEN / 2;
+    locktime[RESERVED_PARTNERS_LOCKED_SIDE] = block.timestamp + 1 years; // lock part for 1 year
     reserved[RESERVED_OTHERS_SIDE] = reservedOtherTokens_ * ONE_TOKEN;
+    locktime[RESERVED_OTHERS_SIDE] = 0;
   }
 
   // Disable direct payments
@@ -66,14 +74,26 @@ contract OTCToken is BaseICOToken {
   /// @dev Other privately distributed tokens
   uint8 public RESERVED_OTHERS_SIDE = 0x8;
 
+  /// @dev Tokens for team members (locked)
+  uint8 public RESERVED_TEAM_LOCKED_SIDE = 0x10;
+
+  /// @dev Tokens for OTCRIT partners (locked)
+  uint8 public RESERVED_PARTNERS_LOCKED_SIDE = 0x20;
+
   /// @dev Token reservation mapping: key(RESERVED_X) => value(number of tokens)
   mapping(uint8 => uint) public reserved;
 
+  mapping(uint8 => uint) public locktime;
+
   /**
-   * @dev Get recerved tokens for specific group
+   * @dev Get reserved tokens for specific group
    */
   function getReservedTokens(uint8 group_) view public returns (uint) {
     return reserved[group_];
+  }
+
+  function getLockTime(uint8 group_) view public returns (uint) {
+    return locktime[group_];
   }
 
   /**
@@ -84,7 +104,9 @@ contract OTCToken is BaseICOToken {
    * @param amount_ Number of tokens distributed with decimals part
    */
   function assignReserved(address to_, uint8 group_, uint amount_) onlyOwner public {
-    require(to_ != address(0) && (group_ & 0xf) != 0);
+    require(to_ != address(0) && (group_ & 0x3f) != 0);
+    // check lock
+    require(block.timestamp > locktime[group_]);
     // SafeMath will check reserved[group_] >= amount
     reserved[group_] = reserved[group_].sub(amount_);
     balances[to_] = balances[to_].add(amount_);
